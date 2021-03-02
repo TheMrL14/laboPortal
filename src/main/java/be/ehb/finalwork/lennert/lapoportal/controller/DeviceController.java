@@ -1,42 +1,36 @@
 package be.ehb.finalwork.lennert.lapoportal.controller;
 
 
+import be.ehb.finalwork.lennert.lapoportal.dao.DeviceDAO;
 import be.ehb.finalwork.lennert.lapoportal.dao.SopDAO;
-import be.ehb.finalwork.lennert.lapoportal.dao.UserDAO;
-import be.ehb.finalwork.lennert.lapoportal.dto.SopDTO;
+import be.ehb.finalwork.lennert.lapoportal.entities.Device;
 import be.ehb.finalwork.lennert.lapoportal.entities.SOP;
-import be.ehb.finalwork.lennert.lapoportal.entities.User;
 import be.ehb.finalwork.lennert.lapoportal.exceptions.EntityNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @Controller
-@RequestMapping("/api/sops")
+@RequestMapping("/api/devices")
 @CrossOrigin("http://localhost:3000")
-public class SopController {
+public class DeviceController {
 
-    private final SopDAO dao;
+    private final DeviceDAO dao;
 
     @Autowired
-    public SopController(SopDAO dao){
+    public DeviceController(DeviceDAO dao){
         this.dao = dao;
     }
 
     //TODO use DTO
     @GetMapping( value = "")
     @ResponseBody
-    public Iterable<SOP> findAllSops(){
+    public Iterable<Device> findAllDevices(){
         return dao.findAll();
     }
 
@@ -44,24 +38,24 @@ public class SopController {
     //TODO use DTO
     @GetMapping(value = "/{id}",
             produces = "application/json")
-    public Optional<SOP> findSopById(@PathVariable(name = "id") Long id ) throws EntityNotFound {
-       return Optional.ofNullable(dao.findById(id))
+    public Optional<Device> findDeviceById(@PathVariable(name = "id") Long id ) throws EntityNotFound {
+        return Optional.ofNullable(dao.findById(id))
                 .orElseThrow(EntityNotFound::new);
 
     }
 
     //POST request
-    @PostMapping(value = "c", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void addNewSop(HttpServletResponse resp,@RequestBody SOP newSop) throws IOException, EntityNotFound {
-        Optional.ofNullable(dao.save(newSop))
+    public void addNewDevice(HttpServletResponse resp, @RequestBody Device newDevice) throws IOException, EntityNotFound {
+        Optional.ofNullable(dao.save(newDevice))
                 .orElseThrow(EntityNotFound::new);
         resp.setStatus(201);
 
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteSop(HttpServletResponse resp ,@PathVariable(name = "id") Long id){
+    public void deleteDevice(HttpServletResponse resp ,@PathVariable(name = "id") Long id){
         dao.deleteById(id);
     }
 }
