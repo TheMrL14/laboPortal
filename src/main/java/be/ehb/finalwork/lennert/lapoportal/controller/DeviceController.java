@@ -47,11 +47,11 @@ public class DeviceController {
     //POST request
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void addNewDevice(HttpServletResponse resp, @RequestBody Device newDevice) throws IOException, EntityNotFound {
-        Optional.ofNullable(dao.save(newDevice))
+    public Device addNewDevice(HttpServletResponse resp, @RequestBody Device newDevice) throws IOException, EntityNotFound {
+        Device addedDevice = Optional.ofNullable(dao.save(newDevice))
                 .orElseThrow(EntityNotFound::new);
         resp.setStatus(201);
-
+        return addedDevice;
     }
 
     @DeleteMapping(value = "/{id}")
