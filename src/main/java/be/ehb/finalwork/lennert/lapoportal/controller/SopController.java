@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,13 +55,19 @@ public class SopController {
     }
 
     //POST request
-    @PostMapping(value = "c", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void addNewSop(HttpServletResponse resp,@RequestBody SOP newSop) throws IOException, EntityNotFound {
-        Optional.ofNullable(dao.save(newSop))
+    public SOP addNewSop(HttpServletResponse resp,@RequestBody SOP newSop) throws IOException, EntityNotFound {
+        newSop.setCreationDate(LocalDate.now());
+        //TEMP
+        var lennert = new User();
+        lennert.setId(1L);
+        newSop.addAuthor(lennert);
+        //
+        SOP sop = Optional.ofNullable(dao.save(newSop))
                 .orElseThrow(EntityNotFound::new);
         resp.setStatus(201);
-
+        return sop;
     }
 
     @DeleteMapping(value = "/{id}")

@@ -12,6 +12,7 @@ import be.ehb.finalwork.lennert.lapoportal.validation.ModificationAfterCreation;
 import javax.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class SOP {
     @JoinTable(name = "jnd_sop_auth",
             joinColumns = @JoinColumn(name = "sop_fk",referencedColumnName="id" ),
             inverseJoinColumns = @JoinColumn(name = "author_fk",referencedColumnName="id"))
-    private List<User> authors;
+    private List<User> authors = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "jnd_sop_revisors",
@@ -61,7 +62,7 @@ public class SOP {
         this.title = title;
         this.description = description;
         this.authors = authors;
-        this.creationDate = creationDate;
+        this.creationDate = LocalDate.now();
         this.procedure = procedure;
     }
 
@@ -96,6 +97,10 @@ public class SOP {
 
     public void setAuthors(List<User> authors) {
         this.authors = authors;
+    }
+
+    public void addAuthor(User author) {
+        this.authors.add(author);
     }
 
     public List<User> getRevisors() {
