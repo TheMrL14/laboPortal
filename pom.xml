@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>be.ehb.final-work.lennert</groupId>
 	<artifactId>lapoportal</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+
 	<name>lapoportal</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -64,6 +64,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>laboportal</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
