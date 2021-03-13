@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/sops")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("*")
 public class SopController {
 
     private final SopDAO dao;
