@@ -3,12 +3,12 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11
+      java:  openjdk15
   post_build:
     commands:
       - mvn package
       - mv target/laboportal.war laboportal.war
 artifacts:
   files:
-    - ROOT.war
+    - laboportal.war
     - .ebextensions/**/*
