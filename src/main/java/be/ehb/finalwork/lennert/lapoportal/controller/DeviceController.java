@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/devices")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("*")
 public class DeviceController {
 
     private final DeviceDAO dao;

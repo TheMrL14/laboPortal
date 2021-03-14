@@ -81,21 +81,6 @@
                     <target>11</target>
 					<release>11</release>
                 </configuration>
-				<executions>
-					<execution>
-						<id>default-war</id>
-						<phase>none</phase>
-					</execution>
-					<execution>
-						<id>war-exploded</id>
-						<configuration>
-							<webappDirectory>target/deploy</webappDirectory>
-							<archiveClasses>true</archiveClasses>
-						</configuration>
-						<phase>prepare-package</phase>
-
-					</execution>
-				</executions>
             </plugin>
         </plugins>
 	</build>
