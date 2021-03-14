@@ -10,5 +10,5 @@ phases:
       - mv target/laboportal.jar laboportal.jar
 artifacts:
   files:
-    - laboportal.war
+    - laboportal.jar
     - .ebextensions/**/*
