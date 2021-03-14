@@ -7,7 +7,7 @@ phases:
   post_build:
     commands:
       - mvn package
-      - mv target/laboportal.war laboportal.war
+      - mv target/laboportal.jar laboportal.jar
 artifacts:
   files:
     - laboportal.war
