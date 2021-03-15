@@ -2,30 +2,20 @@ package be.ehb.finalwork.lennert.lapoportal.controller;
 
 
 import be.ehb.finalwork.lennert.lapoportal.dao.SopDAO;
-import be.ehb.finalwork.lennert.lapoportal.dao.UserDAO;
-import be.ehb.finalwork.lennert.lapoportal.dto.SopDTO;
 import be.ehb.finalwork.lennert.lapoportal.entities.SOP;
 import be.ehb.finalwork.lennert.lapoportal.entities.User;
 import be.ehb.finalwork.lennert.lapoportal.exceptions.EntityNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
-@Controller
+@RestController 
 @RequestMapping("/api/sops")
 @CrossOrigin("*")
 public class SopController {
@@ -46,12 +36,10 @@ public class SopController {
 
 
     //TODO use DTO
-    @GetMapping(value = "/{id}",
-            produces = "application/json")
-    public Optional<SOP> findSopById(@PathVariable(name = "id") Long id ) throws EntityNotFound {
-       return Optional.ofNullable(dao.findById(id))
-                .orElseThrow(EntityNotFound::new);
-
+    @GetMapping(value = "/{id}")
+    public SOP findSopById(@PathVariable(name = "id") Long id ) throws EntityNotFound {
+        Optional<SOP> returnSop =  Optional.ofNullable(dao.findById(id)).orElseThrow(EntityNotFound::new);
+        return returnSop.get();
     }
 
     //POST request
