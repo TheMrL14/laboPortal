@@ -1,11 +1,14 @@
 package be.ehb.finalwork.lennert.lapoportal.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Entity
+@JsonIgnoreProperties(value = { "sop" })
 public class Step {
 
     @Id
@@ -54,5 +57,13 @@ public class Step {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public SOP getSop() {
+        return sop;
+    }
+
+    public void setSop(SOP sop) {
+        this.sop = sop;
     }
 }

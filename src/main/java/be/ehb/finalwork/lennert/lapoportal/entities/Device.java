@@ -26,6 +26,15 @@ public class Device {
     @JoinColumn(name = "sop_fk")
     private SOP sop;
 
+
+
+    public void setFromDevice(Device device){
+        this.name = device.name;
+        this.description = device.description;
+        this.metaInfo = device.metaInfo;
+        this.sop = device.sop;
+    }
+
     public Long getId() {
         return id;
     }
@@ -65,6 +74,8 @@ public class Device {
     public void setSop(SOP sop) {
         this.sop = sop;
     }
+
+
 
 
 }

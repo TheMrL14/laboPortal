@@ -8,6 +8,7 @@ import be.ehb.finalwork.lennert.lapoportal.entities.SOP;
 import be.ehb.finalwork.lennert.lapoportal.exceptions.EntityNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,20 +39,29 @@ public class DeviceController {
     //TODO use DTO
     @GetMapping(value = "/{id}",
             produces = "application/json")
-    public Optional<Device> findDeviceById(@PathVariable(name = "id") Long id ) throws EntityNotFound {
-        return Optional.ofNullable(dao.findById(id))
+    public ResponseEntity<Device> findDeviceById(@PathVariable(name = "id") Long id ) throws EntityNotFound {
+        Device device = dao.findById(id)
                 .orElseThrow(EntityNotFound::new);
+        return ResponseEntity.status(201).body(device);
 
+    }
+
+    //TODO use DTO
+    @PutMapping(value = "/{id}",
+            produces = "application/json")
+    public ResponseEntity<Device> EditDeviceById(@PathVariable(name = "id") Long id ,@RequestBody Device deviceDetails ) throws EntityNotFound {
+        Device device = dao.findById(id)
+                .orElseThrow(EntityNotFound::new);
+        device.setFromDevice(deviceDetails);
+        return  ResponseEntity.status(201).body(device);
     }
 
     //POST request
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Device addNewDevice(HttpServletResponse resp, @RequestBody Device newDevice) throws IOException, EntityNotFound {
-        Device addedDevice = Optional.ofNullable(dao.save(newDevice))
-                .orElseThrow(EntityNotFound::new);
-        resp.setStatus(201);
-        return addedDevice;
+    public ResponseEntity<Device> addNewDevice(@RequestBody Device newDevice) throws IOException, EntityNotFound {
+        Device device = dao.save(newDevice);
+        return ResponseEntity.status(201).body(device);
     }
 
     @DeleteMapping(value = "/{id}")

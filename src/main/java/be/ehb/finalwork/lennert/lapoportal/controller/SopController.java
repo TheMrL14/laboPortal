@@ -51,10 +51,11 @@ public class SopController {
         var lennert = new User();
         lennert.setId(1L);
         newSop.addAuthor(lennert);
-        //
+        newSop.getProcedure().forEach(step -> step.setSop(newSop));
         SOP sop = Optional.ofNullable(dao.save(newSop))
                 .orElseThrow(EntityNotFound::new);
         resp.setStatus(201);
+
         return sop;
     }
 
