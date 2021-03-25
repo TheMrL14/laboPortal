@@ -140,6 +140,12 @@ public class SOP {
     }
 
 
+    public void setFromSop(SOP sopDetails) {
 
-
+        this.title = sopDetails.title;
+        this.description = sopDetails.description;
+        this.authors = sopDetails.authors;
+       this.lastModifiedDate = LocalDate.now();
+        this.procedure = sopDetails.procedure;
+    }
 }
