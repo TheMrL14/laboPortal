@@ -4,6 +4,8 @@ package be.ehb.finalwork.lennert.lapoportal.entities;
 import be.ehb.finalwork.lennert.lapoportal.dto.DeviceDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -25,11 +27,15 @@ class Device extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "sop_fk")
-    private SOP sop;
+    @ToString.Exclude private SOP sop;
+
+    @Column(name="device_image_name", nullable=true)
+    @ToString.Exclude private String imageName;
 
     @Lob
+    @JsonIgnore
     @Column(name="device_image", nullable=true, columnDefinition="mediumblob")
-    private byte[] image;
+    @ToString.Exclude private byte[] image;
 
 
     public void setFromDevice(DeviceDTO device){
@@ -37,6 +43,8 @@ class Device extends BaseEntity{
         this.description = device.getDescription();
         this.metaInfo = device.getMetaInfo();
         this.sop = device.getSop();
+        this.image = device.getImage();
+        this.imageName = device.getImageName();
     }
     public  Device(DeviceDTO device){
         setFromDevice(device);

@@ -31,7 +31,7 @@ public class SopController {
         this.map = new SOPClassMapper();
     }
 
-}
+
     @GetMapping( value = "")
     public ResponseEntity<List<SopDTO>> findAllSops(){
         List<SopDTO> sops  = map.fromEntities(dao.findAll());
@@ -54,6 +54,7 @@ public class SopController {
     public ResponseEntity<SopDTO> editDeviceById(@PathVariable(name = "id") Long id ,@RequestBody SopDTO sopDetails ) throws EntityNotFound, InputNotCorrect {
         SOP sop = findById(id);
         sop.setFromSop(sopDetails);
+        dao.save(sop);
         return  ResponseEntity.status(201).body(map.fromEntity(sop));
     }
 

@@ -51,6 +51,7 @@ public class DeviceController {
     public ResponseEntity<DeviceDTO> editDeviceById(@PathVariable(name = "id") Long id ,@RequestBody DeviceDTO deviceDetails ) throws EntityNotFound, InputNotCorrect {
         Device device = findById(id);
         device.setFromDevice(deviceDetails);
+        dao.save(device);
         return  ResponseEntity.status(201).body(map.fromEntity(device));
     }
 

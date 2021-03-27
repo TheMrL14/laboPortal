@@ -13,4 +13,5 @@ public class DeviceDTO {
     private final String metaInfo;
     private final SOP sop;
     private final byte[] image;
+    private final String imageName;
 }

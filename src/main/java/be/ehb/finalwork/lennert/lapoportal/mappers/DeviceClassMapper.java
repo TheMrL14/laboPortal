@@ -9,7 +9,7 @@ public class DeviceClassMapper implements Mapper<Device, DeviceDTO> {
 
     @Override
     public DeviceDTO fromEntity(Device e) {
-        return new DeviceDTO(e.getId(),e.getName(), e.getDescription(), e.getMetaInfo(), e.getSop(), e.getImage());
+        return new DeviceDTO(e.getId(),e.getName(), e.getDescription(), e.getMetaInfo(), e.getSop(), e.getImage(),e.getImageName());
     }
 
 
