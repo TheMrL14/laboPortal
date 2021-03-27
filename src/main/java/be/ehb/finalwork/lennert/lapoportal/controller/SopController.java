@@ -2,19 +2,19 @@ package be.ehb.finalwork.lennert.lapoportal.controller;
 
 
 import be.ehb.finalwork.lennert.lapoportal.dao.SopDAO;
-import be.ehb.finalwork.lennert.lapoportal.entities.Device;
+import be.ehb.finalwork.lennert.lapoportal.dto.SopDTO;
 import be.ehb.finalwork.lennert.lapoportal.entities.SOP;
-import be.ehb.finalwork.lennert.lapoportal.entities.User;
 import be.ehb.finalwork.lennert.lapoportal.exceptions.EntityNotFound;
+import be.ehb.finalwork.lennert.lapoportal.exceptions.InputNotCorrect;
+import be.ehb.finalwork.lennert.lapoportal.mappers.Mapper;
+import be.ehb.finalwork.lennert.lapoportal.mappers.SOPClassMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
 
 @RestController 
@@ -23,58 +23,58 @@ import java.util.Optional;
 public class SopController {
 
     private final SopDAO dao;
+    private final Mapper<SOP, SopDTO> map;
 
     @Autowired
-    public SopController(SopDAO dao){
+    public SopController(SopDAO dao) {
         this.dao = dao;
+        this.map = new SOPClassMapper();
     }
 
-    //TODO use DTO
+}
     @GetMapping( value = "")
-    @ResponseBody
-    public Iterable<SOP> findAllSops(){
-        return dao.findAll();
+    public ResponseEntity<List<SopDTO>> findAllSops(){
+        List<SopDTO> sops  = map.fromEntities(dao.findAll());
+        return ResponseEntity.ok().body(sops);
+
     }
 
 
-    //TODO use DTO
+
     @GetMapping(value = "/{id}",
             produces = "application/json")
-    public ResponseEntity<SOP> findDeviceById(@PathVariable(name = "id") Long id ) throws EntityNotFound {
-        SOP sop = dao.findById(id)
-                .orElseThrow(EntityNotFound::new);
-        return ResponseEntity.status(201).body(sop);
+    public ResponseEntity<SopDTO> findDeviceById(@PathVariable(name = "id") Long id ) throws EntityNotFound, InputNotCorrect {
+        SOP sop = findById(id);
+        return ResponseEntity.status(201).body(map.fromEntity(sop));
 
     }
 
     @PutMapping(value = "/{id}",
             produces = "application/json")
-    public ResponseEntity<SOP> EditDeviceById(@PathVariable(name = "id") Long id ,@RequestBody SOP sopDetails ) throws EntityNotFound {
-        SOP sop = dao.findById(id)
-                .orElseThrow(EntityNotFound::new);
+    public ResponseEntity<SopDTO> editDeviceById(@PathVariable(name = "id") Long id ,@RequestBody SopDTO sopDetails ) throws EntityNotFound, InputNotCorrect {
+        SOP sop = findById(id);
         sop.setFromSop(sopDetails);
-        return  ResponseEntity.status(201).body(sop);
+        return  ResponseEntity.status(201).body(map.fromEntity(sop));
     }
 
     //POST request
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public SOP addNewSop(HttpServletResponse resp,@RequestBody SOP newSop) throws IOException, EntityNotFound {
-        newSop.setCreationDate(LocalDate.now());
-        //TEMP
-        var lennert = new User();
-        lennert.setId(1L);
-        newSop.addAuthor(lennert);
-        newSop.getProcedure().forEach(step -> step.setSop(newSop));
-        SOP sop = Optional.ofNullable(dao.save(newSop))
-                .orElseThrow(EntityNotFound::new);
-        resp.setStatus(201);
-
-        return sop;
+    public ResponseEntity<SopDTO> addNewSop(HttpServletResponse resp,@RequestBody SopDTO newSop) {
+        SOP sop = dao.save(new SOP(newSop,"TEST"));
+        return  ResponseEntity.status(201).body(map.fromEntity(sop));
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteSop(HttpServletResponse resp ,@PathVariable(name = "id") Long id){
+    public void deleteSop(@PathVariable(name = "id") Long id){
         dao.deleteById(id);
+    }
+
+    private SOP findById(Long id) throws EntityNotFound, InputNotCorrect {
+        if( id < 0) throw new InputNotCorrect();
+        return dao.findById(id)
+                .orElseThrow(EntityNotFound::new);
     }
 }

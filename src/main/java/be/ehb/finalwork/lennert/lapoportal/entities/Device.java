@@ -1,22 +1,23 @@
 package be.ehb.finalwork.lennert.lapoportal.entities;
 
 
-
+import be.ehb.finalwork.lennert.lapoportal.dto.DeviceDTO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "devices")
-public class Device {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@NoArgsConstructor
+public @Data
+class Device extends BaseEntity{
 
     private String name;
 
+    @Lob
+    @Column(length = 100000)
     private String description;
 
     @Column(name = "meta_info")
@@ -26,56 +27,19 @@ public class Device {
     @JoinColumn(name = "sop_fk")
     private SOP sop;
 
+    @Lob
+    @Column(name="device_image", nullable=true, columnDefinition="mediumblob")
+    private byte[] image;
 
 
-    public void setFromDevice(Device device){
-        this.name = device.name;
-        this.description = device.description;
-        this.metaInfo = device.metaInfo;
-        this.sop = device.sop;
+    public void setFromDevice(DeviceDTO device){
+        this.name = device.getName();
+        this.description = device.getDescription();
+        this.metaInfo = device.getMetaInfo();
+        this.sop = device.getSop();
     }
-
-    public Long getId() {
-        return id;
+    public  Device(DeviceDTO device){
+        setFromDevice(device);
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getMetaInfo() {
-        return metaInfo;
-    }
-
-    public void setMetaInfo(String metaInfo) {
-        this.metaInfo = metaInfo;
-    }
-
-    public SOP getSop() {
-        return sop;
-    }
-
-    public void setSop(SOP sop) {
-        this.sop = sop;
-    }
-
-
-
 
 }

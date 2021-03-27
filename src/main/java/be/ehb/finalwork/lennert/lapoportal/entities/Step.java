@@ -1,22 +1,16 @@
 package be.ehb.finalwork.lennert.lapoportal.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Entity
 @JsonIgnoreProperties(value = { "sop" })
-public class Step {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public @Data class Step extends BaseEntity {
 
     @Positive
-
     private Integer stepNr;
 
     @Lob
@@ -27,43 +21,4 @@ public class Step {
     @JoinColumn(name = "sop_id")
     private SOP sop;
 
-    public Step() {
-    }
-
-    public Step(@Positive @NotBlank Integer stepNr, @NotBlank String message) {
-        this.stepNr = stepNr;
-        this.message = message;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getStepNr() {
-        return stepNr;
-    }
-
-    public void setStepNr(Integer stepNr) {
-        this.stepNr = stepNr;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public SOP getSop() {
-        return sop;
-    }
-
-    public void setSop(SOP sop) {
-        this.sop = sop;
-    }
 }
