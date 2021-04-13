@@ -42,7 +42,7 @@ class Device extends BaseEntity{
         this.name = device.getName();
         this.description = device.getDescription();
         this.metaInfo = device.getMetaInfo();
-        this.sop = device.getSop();
+        this.sop = (device.getSop().getTitle() != null) ?device.getSop() : null;
         this.image = device.getImage();
         this.imageName = device.getImageName();
     }

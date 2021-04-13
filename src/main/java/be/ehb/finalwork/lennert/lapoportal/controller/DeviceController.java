@@ -23,6 +23,7 @@ public class DeviceController {
 
     private final DeviceDAO dao;
     private final Mapper<Device, DeviceDTO> map;
+    
     @Autowired
     public DeviceController(DeviceDAO dao){
         this.dao = dao;
@@ -42,7 +43,7 @@ public class DeviceController {
             produces = "application/json")
     public ResponseEntity<DeviceDTO> findDeviceById(@PathVariable(name = "id") Long id ) throws EntityNotFound, InputNotCorrect {
         Device device = findById(id);
-        return ResponseEntity.status(201).body(map.fromEntity(device));
+        return ResponseEntity.ok().body(map.fromEntity(device));
     }
 
 
@@ -60,7 +61,7 @@ public class DeviceController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DeviceDTO> addNewDevice(@RequestBody DeviceDTO newDevice) {
-        Device device = dao.save(new Device(newDevice));
+         Device device = dao.save(new Device(newDevice));
         return ResponseEntity.status(201).body(map.fromEntity(device));
     }
 

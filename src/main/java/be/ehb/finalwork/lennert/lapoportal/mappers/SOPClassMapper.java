@@ -10,8 +10,9 @@ public class SOPClassMapper implements Mapper<SOP, SopDTO> {
 
     @Override
     public SopDTO fromEntity(SOP e) {
-        return new SopDTO(e.getId(),e.getTitle(),e.getDescription(),
+        return new SopDTO(e.getId(),e.getTitle(),e.getDescription(),e.getAbbreviations(),
                 e.getAuthors(),e.getRevisors(),
-                e.getProcedure());
+                e.getProcedure(),
+                e.getImage(),e.getImageName());
     }
 }

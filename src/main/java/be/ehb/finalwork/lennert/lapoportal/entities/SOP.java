@@ -1,13 +1,17 @@
 package be.ehb.finalwork.lennert.lapoportal.entities;
 
 import be.ehb.finalwork.lennert.lapoportal.dto.SopDTO;
+import be.ehb.finalwork.lennert.lapoportal.security.entities.User;
 import be.ehb.finalwork.lennert.lapoportal.validation.ModificationAfterCreation;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "sops")
@@ -34,8 +38,20 @@ class SOP extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "revisors_fk"))
     private List<User> revisors;
 
-    @OneToMany(mappedBy = "sop", cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = {CascadeType.ALL},targetEntity=Step.class)
     private List<Step> procedure;
+
+    @OneToMany( cascade = {CascadeType.ALL},targetEntity=Abbreviation.class)
+    private List<Abbreviation> abbreviations;
+
+    @Column(name="sop_image_name", nullable=true)
+    @ToString.Exclude private String imageName;
+
+    @Lob
+    @JsonIgnore
+    @Column(name="sop_image", nullable=true, columnDefinition="mediumblob")
+    @ToString.Exclude private byte[] image;
+
 
     public void setFromSop(SopDTO sopDetails) {
         this.title = sopDetails.getTitle();
@@ -44,6 +60,9 @@ class SOP extends BaseEntity {
         this.revisors = sopDetails.getRevisors();
         this.procedure = sopDetails.getProcedure();
         this.procedure.forEach(step -> step.setSop(this));
+        this.image = sopDetails.getImage();
+        this.imageName = sopDetails.getImageName();
+        this.abbreviations =sopDetails.getAbbreviations();
     }
 
     public void addAuthor(User u){authors.add(u);}
@@ -56,9 +75,6 @@ class SOP extends BaseEntity {
 
     //TEST FASE
     public SOP(SopDTO e, String a) {
-        var lennert = new User();
-        lennert.setId(1L);
-        this.addAuthor(lennert);
         setFromSop(e);
     }
 }
