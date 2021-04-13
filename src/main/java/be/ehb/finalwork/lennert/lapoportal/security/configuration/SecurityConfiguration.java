@@ -14,6 +14,10 @@ import org.springframework.security.oauth2.jwt.*;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final String BASIC_API_URL = "/api/**";
+
+
+
     @Value("${auth0.audience}")
     private String audience;
 
@@ -40,9 +44,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
-                        .mvcMatchers(HttpMethod.POST,"/api/**").hasAuthority("WRITE")
-                        .mvcMatchers(HttpMethod.DELETE,"/api/**").hasAuthority("WRITE")
-                        .mvcMatchers(HttpMethod.GET,"/api/**").permitAll()
+                        .mvcMatchers(HttpMethod.POST,BASIC_API_URL).hasAuthority("WRITE")
+                        .mvcMatchers(HttpMethod.DELETE,BASIC_API_URL).hasAuthority("WRITE")
+                        .mvcMatchers(HttpMethod.GET,BASIC_API_URL).permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors()

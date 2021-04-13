@@ -11,7 +11,6 @@ import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "sops")
@@ -41,8 +40,8 @@ class SOP extends BaseEntity {
     @OneToMany(cascade = {CascadeType.ALL},targetEntity=Step.class)
     private List<Step> procedure;
 
-    @OneToMany( cascade = {CascadeType.ALL},targetEntity=Abbreviation.class)
-    private List<Abbreviation> abbreviations;
+    @OneToMany( cascade = {CascadeType.ALL},targetEntity= AbbreviationAndDescription.class)
+    private List<AbbreviationAndDescription> abbreviationAndDescriptions;
 
     @Column(name="sop_image_name", nullable=true)
     @ToString.Exclude private String imageName;
@@ -62,7 +61,7 @@ class SOP extends BaseEntity {
         this.procedure.forEach(step -> step.setSop(this));
         this.image = sopDetails.getImage();
         this.imageName = sopDetails.getImageName();
-        this.abbreviations =sopDetails.getAbbreviations();
+        this.abbreviationAndDescriptions =sopDetails.getAbbreviationAndDescriptions();
     }
 
     public void addAuthor(User u){authors.add(u);}
@@ -73,8 +72,4 @@ class SOP extends BaseEntity {
         setFromSop(e);
     }
 
-    //TEST FASE
-    public SOP(SopDTO e, String a) {
-        setFromSop(e);
-    }
 }

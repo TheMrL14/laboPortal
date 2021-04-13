@@ -1,6 +1,6 @@
 package be.ehb.finalwork.lennert.lapoportal.dto;
 
-import be.ehb.finalwork.lennert.lapoportal.entities.Abbreviation;
+import be.ehb.finalwork.lennert.lapoportal.entities.AbbreviationAndDescription;
 import be.ehb.finalwork.lennert.lapoportal.entities.Step;
 import be.ehb.finalwork.lennert.lapoportal.security.entities.User;
 import lombok.Getter;
@@ -14,7 +14,7 @@ public class SopDTO {
     private final Long id;
     private final  String title;
     private final String description;
-    private final List<Abbreviation> abbreviations;
+    private final List<AbbreviationAndDescription> abbreviationAndDescriptions;
     private final List<User> authors;
     private final List<User> revisors;
     private final List<Step> procedure;
