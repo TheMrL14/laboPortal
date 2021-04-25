@@ -10,4 +10,4 @@ public class LapoportalApplication {
     public static void main(String[] args) {
         SpringApplication.run(LapoportalApplication.class, args);
     }
-   }
+}
