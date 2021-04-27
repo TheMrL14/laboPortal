@@ -31,6 +31,7 @@ public class PdfProcessor implements Processor<Document, SOP> {
         Boolean isProcedureChapter = false;
         for (Element line : toProcess.body().select("p")) {
             Boolean isHeader = isHeader(line);
+            Boolean isValuableHeader = false;
             Boolean isUselessLine = isUselessLine(line);
             if (TRUE.equals(isUselessLine)) {
                 line.remove();
@@ -38,17 +39,19 @@ public class PdfProcessor implements Processor<Document, SOP> {
             }
 
             for (PdfChapter chapter : PdfChapter.values()) {
-                Boolean isValuableHeader =isValuableHeader(line, chapter.getHeader());
-
+                isValuableHeader = isValuableHeader(line, chapter.getHeader());
                 if (TRUE.equals(isValuableHeader)) {
                     sopHtml.add(divWithAttr(chapter.getHeader()));
-                    isHeader = true;
                     isProcedureChapter = chapter.equals(PROCEDURE);
                     break;
                 }
             }
 
-            if (FALSE.equals(isHeader) || (isProcedureChapter && !isValuableHeader(line, PROCEDURE.getHeader()))) {
+            if (TRUE.equals(isHeader) && FALSE.equals(isValuableHeader) && FALSE.equals(isProcedureChapter)) {
+                sopHtml.add(divWithAttr(line.text()));
+            }
+
+            if (FALSE.equals(isHeader) || (FALSE.equals(isValuableHeader) && TRUE.equals(isProcedureChapter))) {
                 sopHtml.last().appendChild(line);
             }
         }
@@ -56,12 +59,12 @@ public class PdfProcessor implements Processor<Document, SOP> {
 
     }
 
-    private Boolean isUselessLine(Element line){
+    private Boolean isUselessLine(Element line) {
         return
                 (!line.hasText())
-                || line.text().trim().length() <= 2
-                || line.text().startsWith("Pagina")
-                || line.text().startsWith("Figuur");
+                        || line.text().trim().length() <= 2
+                        || line.text().startsWith("Pagina")
+                        || line.text().startsWith("Figuur");
     }
 
     private Element divWithAttr(String attr) {
@@ -69,7 +72,6 @@ public class PdfProcessor implements Processor<Document, SOP> {
         div.attr("header", attr);
         return div;
     }
-
 
 
     private Boolean isValuableHeader(Element line, String value) {
