@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/sops")
-@CrossOrigin("*")
+@CrossOrigin(origins = {"https://www.lennertvh.xyz", "http://localhost:3000/"}, maxAge = 3600)
 public class SopController {
 
     private final SopDAO dao;
