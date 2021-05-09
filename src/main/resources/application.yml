@@ -1,8 +1,0 @@
-auth0:
-  audience: http://localhost:5000
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://appframework-dev.eu.auth0.com/

@@ -1,0 +1,8 @@
+auth0:
+  audience: OHpay7xgtQnuQW2sbrK4Qen5inFqUVTr
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://appframework-dev.eu.auth0.com/

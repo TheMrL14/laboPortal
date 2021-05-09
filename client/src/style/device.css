@@ -1,0 +1,18 @@
+#qr-result {
+    width: fit-content;
+    height: fit-content;
+}
+
+.qr-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.qr-content > * {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.qr-content button {
+    width: 300px;
+}

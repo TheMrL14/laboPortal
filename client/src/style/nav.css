@@ -1,0 +1,183 @@
+header nav {
+    background: var(--main-color);
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    height: fit-content;
+    width: 100%;
+    flex-direction: row;
+    padding-top: 0.5rem;
+    z-index: 1000;
+}
+
+header nav a {
+    font-size: 1.1rem;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    padding: 2rem 1em;
+}
+
+header a {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+header a.active {
+    background-color: var(--secondary-color);
+}
+
+.menu li {
+    margin: 1em;
+}
+
+.menu a {
+    font-size: 1.2rem;
+
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.menu a.active {
+    color: var(--secondary-color);
+    padding-left: 0.5rem;
+    border-left: solid var(--secondary-color);
+}
+
+/*https://codepen.io/mutedblues/pen/MmPNPG?editors=1100*/
+
+.menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+    flex-direction: column;
+}
+
+aside ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+/* aside */
+
+aside {
+    background-color: #fff;
+    z-index: 3;
+
+}
+
+/* menu icon */
+
+aside .menu-icon {
+    cursor: pointer;
+    display: inline-block;
+    padding: 1rem;
+    position: relative;
+    user-select: none;
+}
+
+aside .menu-icon .navicon {
+    background: #333;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background 0.2s ease-out;
+    width: 1.2rem;
+}
+
+aside .menu-icon .navicon:before,
+aside .menu-icon .navicon:after {
+    background: #333;
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all 0.2s ease-out;
+    width: 100%;
+}
+
+aside .menu-icon .navicon:before {
+    top: 5px;
+}
+
+aside .menu-icon .navicon:after {
+    top: -5px;
+}
+
+/* menu btn */
+
+aside .menu-btn {
+    display: none;
+}
+
+aside .menu-btn:checked ~ .menu {
+    max-height: 240px;
+}
+
+aside .menu-btn:checked ~ .menu-icon .navicon {
+    background: transparent;
+}
+
+aside .menu-btn:checked ~ .menu-icon .navicon:before {
+    transform: rotate(-45deg);
+}
+
+aside .menu-btn:checked ~ .menu-icon .navicon:after {
+    transform: rotate(45deg);
+}
+
+aside .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+aside .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+    top: 0;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    a {
+        font-size: 1rem !important;
+    }
+
+    header nav {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        width: 8rem;
+        padding-top: 2rem;
+    }
+
+    aside .menu a {
+        float: left;
+    }
+
+    aside .menu {
+        clear: none;
+        float: right;
+        max-height: none;
+    }
+
+    aside .menu-icon {
+        display: none;
+    }
+
+    .menu {
+        display: flex !important;
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}

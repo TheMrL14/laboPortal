@@ -1,0 +1,11 @@
+-node
+-webpack 5 
+-babel
+-ESlint
+-primefaces react (TO BE DONE)
+-Redux
+    -immer
+-
+
+_________________________________CSS
+https://codepen.io/tutsplus/pen/qaJPKL

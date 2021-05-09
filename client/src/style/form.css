@@ -1,0 +1,111 @@
+.form-group {
+    margin-bottom: 1.5em;
+}
+
+.p-tabview {
+    width: 80%;
+}
+
+input,
+textarea {
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin: 0.5em 0em;
+    width: 100%;
+    color: #495057;
+}
+
+button {
+    border: none;
+    background: rgba(200, 200, 200, 0.2);
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    margin: 0.1em;
+}
+
+.remove {
+    background-color: crimson;
+}
+
+.add {
+    background-color: darkolivegreen;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    border: none !important;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+    background-color: rgba(241, 91, 42, 0.5) !important;
+}
+
+.sopForm {
+    background-color: white;
+}
+
+.sopForm .top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.sopForm .closeBtn {
+    float: left;
+}
+
+.step-row {
+    display: flex;
+}
+
+.step-row button {
+    margin-left: 0.5rem !important;
+}
+
+.step-row .p-fileupload {
+    vertical-align: auto;
+    margin: 1rem 0rem;
+    margin-left: 0.5rem !important;
+}
+
+.step-row .p-fileupload .p-button-label {
+    font-size: 0.7rem;
+    text-indent: 0;
+    display: block;
+    line-height: initial;
+}
+
+.step-row .p-fileupload .p-button-label::after {
+    content: "  Image";
+}
+
+.step-row .pi-plus:before {
+    content: "" !important;
+    display: none;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .form-group {
+        width: 100%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    * {
+        font-size: 1rem !important;
+    }
+}

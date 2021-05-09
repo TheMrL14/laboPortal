@@ -1,0 +1,111 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+
+    background: white;
+    text-decoration: none;
+    color: #444;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card .thumb {
+    padding-bottom: 70%;
+    background-size: 105%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+
+    transition: background-size 1s ease-in;
+    -moz-transition: background-size 1s ease-in;
+    -ms-transition: background-size 1s ease-in;
+    -o-transition: background-size 1s ease-in;
+    -webkit-transition: background-size 1s ease-in;
+}
+
+.card .thumb:hover {
+    background-size: 115%;
+    background-position: center;
+}
+
+.thumb:after {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.card article {
+    padding: 20px;
+}
+
+/* typography */
+.card h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+}
+
+.card p {
+    flex: 1; /* make p grow to fill available space*/
+    line-height: 1.4;
+}
+
+.card span {
+    font-size: 1em;
+    font-weight: bold;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 2em 0 0 0;
+}
+
+.card span.addDeviceBtn {
+    font-size: 5em;
+    margin: auto;
+    color: black;
+    text-align: center;
+}
+
+.searchBar {
+    margin: 1rem auto;
+}
+
+
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .searchBar {
+        width: 100%;
+
+    }
+}
+
+@media screen and (min-width: 1900px) {
+    .p-xxl {
+        width: 18% !important;
+    }
+
+}
+
+
