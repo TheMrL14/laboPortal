@@ -5,7 +5,7 @@ version: '3.7'
 # Define services
 services:
   # App backend service
-  app-server:
+  labapp-server:
     # Configuration for building the docker image for the backend service
     build:
       context: server # Use an image built from the specified dockerfile in the `server` directory.
@@ -18,7 +18,7 @@ services:
       - frontend
 
   # Frontend Service
-  app-client:
+  labapp-client:
     build:
       context: client # Use an image built from the specified dockerfile in the `polling-app-client` directory.
       dockerfile: Dockerfile
@@ -28,7 +28,7 @@ services:
       - "80:80" # Map the exposed port 80 on the container to port 9090 on the host machine
     restart: always
     depends_on:
-      - app-server
+      - labapp-server
     networks:
       - frontend
 
