@@ -34,6 +34,7 @@ public class DeviceController {
     @GetMapping(value = "")
     public ResponseEntity<List<DeviceDTO>> findAllDevices() {
         List<DeviceDTO> devices = map.fromEntities(dao.findAll());
+        System.out.println(devices);
         return ResponseEntity.ok().body(devices);
     }
 
