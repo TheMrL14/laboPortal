@@ -23,7 +23,6 @@ function DevicesPage({devices, loadDevices, ...props}) {
         }
     }, [props.filteredDevices]);
 
-    console.log(filteredDevices)
 
     const handleSearch = (event) => {
         let value = event.target.value.toLowerCase();
