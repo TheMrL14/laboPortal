@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/devices")
-@CrossOrigin(origins = {"https://www.lennertvh.xyz", "http://localhost:3000", "http://193.191.183.46"}, maxAge = 3600)
+@CrossOrigin(origins = {"https://www.lennertvh.xyz", "http://localhost:3030", "http://193.191.183.46", "http://localhost"}, maxAge = 3600)
 public class DeviceController {
 
     private final DeviceDAO dao;
