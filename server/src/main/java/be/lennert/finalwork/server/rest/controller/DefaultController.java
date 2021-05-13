@@ -10,4 +10,9 @@ public class DefaultController {
     public String helloWorld() {
         return "hello world";
     }
+
+    @GetMapping(value = {"/api/db"})
+    public String testDb() {
+        return "hello world";
+    }
 }

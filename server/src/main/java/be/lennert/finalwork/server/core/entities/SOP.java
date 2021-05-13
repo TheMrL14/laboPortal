@@ -24,22 +24,23 @@ public class SOP extends BaseEntity {
     @Column(length = 100000)
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.ALL})
     @JoinTable(name = "jnd_sop_auth",
             joinColumns = @JoinColumn(name = "sop_fk", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "author_fk", referencedColumnName = "id"))
     private List<User> authors = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.ALL})
     @JoinTable(name = "jnd_sop_revisors",
             joinColumns = @JoinColumn(name = "sop_fk"),
             inverseJoinColumns = @JoinColumn(name = "revisors_fk"))
+
     private List<User> revisors;
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Step.class)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.ALL}, targetEntity = Step.class)
     private List<Step> procedure;
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Abbreviation.class)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.ALL}, targetEntity = Abbreviation.class)
     private List<Abbreviation> abbreviations;
 
     @Column(name = "sop_image_name", nullable = true)
