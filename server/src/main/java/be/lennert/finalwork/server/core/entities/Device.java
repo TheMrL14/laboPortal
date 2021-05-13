@@ -24,7 +24,7 @@ public class Device extends BaseEntity {
     @Column(name = "meta_info")
     private String metaInfo;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "sop_fk")
     @ToString.Exclude
     private SOP sop;
