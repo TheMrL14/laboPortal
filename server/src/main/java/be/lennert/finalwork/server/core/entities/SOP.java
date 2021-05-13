@@ -37,7 +37,7 @@ public class SOP extends BaseEntity {
 
     private List<User> revisors;
 
-    @OneToMany(cascade = {CascadeType.ALL}, targetEntity = Step.class)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.ALL}, targetEntity = Step.class)
     private List<Step> procedure;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.ALL}, targetEntity = Abbreviation.class)
