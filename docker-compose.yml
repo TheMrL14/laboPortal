@@ -1,24 +1,45 @@
 # Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
 
-version: '3.7'
+version: '3.8'
 
 # Define services
 services:
+
+  # DB Service
+  mysql-db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: e2B2UvtBZa
+      MYSQL_DATABASE: 2021FWLENNERTVDH
+      MYSQL_USER: 2021FWLENNERTVDH
+      MYSQL_PASSWORD: e2B2UvtBZa
+    ports:
+      - "3306:3306" # Forward the exposed port on the container to port on the host machine
+    expose:
+      - '3306'
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
+
   # App backend service
-  labapp-server:
+  server:
     # Configuration for building the docker image for the backend service
     build:
       context: server # Use an image built from the specified dockerfile in the `server` directory.
       dockerfile: Dockerfile
     ports:
-      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+      - "8080:8080"
     restart: always
+    depends_on:
+      - mysql-db
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - backend
       - frontend
 
   # Frontend Service
-  labapp-client:
+  client:
     build:
       context: client # Use an image built from the specified dockerfile in the `polling-app-client` directory.
       dockerfile: Dockerfile
@@ -28,9 +49,11 @@ services:
       - "80:80" # Map the exposed port 80 on the container to port 9090 on the host machine
     restart: always
     depends_on:
-      - labapp-server
+      - server
     networks:
       - frontend
+
+
 
 # Volumes
 volumes:

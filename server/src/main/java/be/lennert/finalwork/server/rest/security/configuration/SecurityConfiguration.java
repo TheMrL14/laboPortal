@@ -2,7 +2,6 @@ package be.lennert.finalwork.server.rest.security.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -42,11 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
-                        .mvcMatchers(HttpMethod.PUT, BASICAPIURL).authenticated()
-                        .mvcMatchers(HttpMethod.POST, BASICAPIURL).authenticated()
-                        .mvcMatchers(HttpMethod.DELETE, BASICAPIURL).authenticated()
-                        .mvcMatchers(HttpMethod.GET, BASICAPIURL).permitAll()
-                        .anyRequest().denyAll()
+//                        .mvcMatchers(HttpMethod.PUT, BASICAPIURL).authenticated()
+//                        .mvcMatchers(HttpMethod.POST, BASICAPIURL).authenticated()
+//                        .mvcMatchers(HttpMethod.DELETE, BASICAPIURL).authenticated()
+//                        .mvcMatchers(HttpMethod.GET, BASICAPIURL).permitAll()
+                                .anyRequest().permitAll()
                 )
                 .cors()
                 .and()
