@@ -65,12 +65,16 @@ public class DeviceController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DeviceDTO> addNewDevice(@RequestBody DeviceDTO newDevice) {
-        Optional<SOP> value = sopDAO.findById(newDevice.getSop().getId());
-        if (value.isPresent()) {
-            SOP sop = value.get();
-            sop.hasDevice();
-            newDevice.setSOP(sop);
+
+        if (newDevice.getSop() != null) {
+            Optional<SOP> value = sopDAO.findById(newDevice.getSop().getId());
+            if (value.isPresent()) {
+                SOP sop = value.get();
+                sop.hasDevice();
+                newDevice.setSOP(sop);
+            }
         }
+
         Device device = dao.save(new Device(newDevice));
 
         return ResponseEntity.status(201).body(map.fromEntity(device));

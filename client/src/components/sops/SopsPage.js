@@ -42,7 +42,6 @@ function SopsPage({sops, loadSops, ...props}) {
 
 
     useEffect(() => {
-        console.log("ja")
         filter()
 
     }, [typeFilter])
@@ -56,10 +55,8 @@ function SopsPage({sops, loadSops, ...props}) {
             });
 
         });
-        console.log(typeFilter)
         sopsToSelect = sopsToSelect.filter(sop => sop.type.indexOf(typeFilter) > -1)
         setFilteredSops(sopsToSelect)
-        console.log(filteredSops)
     }
 
     function onRowSelect(event) {

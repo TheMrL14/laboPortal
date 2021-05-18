@@ -45,9 +45,9 @@ export function authenticatedPostFileRequest(endpoint, file) {
     formData.append('file', file);
     return fetch(rootEndpoint + endpoint, {
         method: "POST",
-        headers: {
-            Authorization: "Bearer " + token,
-        },
+        // headers: {
+        //     Authorization: "Bearer " + token,
+        // },
         body: formData
         ,
     })

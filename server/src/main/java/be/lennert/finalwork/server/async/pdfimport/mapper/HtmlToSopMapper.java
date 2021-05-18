@@ -105,6 +105,7 @@ public class HtmlToSopMapper {
                 .abbreviations(abbreviations)
                 .description(description)
                 .title(title)
+                .type(SOP.SopType.DEVICE)
                 .build();
         newSOP.setProcedureWithStepNr(procedure);
         return newSOP;
