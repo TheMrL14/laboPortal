@@ -17,6 +17,6 @@ public class SOPClassMapper implements Mapper<SOP, SopDTO> {
         return new SopDTO(e.getId(), e.getTitle(), e.getDescription(), e.getAbbreviations(),
                 e.getAuthors(), e.getRevisors(),
                 e.getProcedure(),
-                e.getImage(), e.getImageName(), e.getCreationDate().format(dateFormat));
+                e.getImage(), e.getImageName(), e.getCreationDate(), e.getType());
     }
 }

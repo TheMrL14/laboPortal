@@ -18,7 +18,6 @@ const SopForm = ({
                      onAbbreviationChange,
                      onAbbreviationAdd,
                      onAbbreviationRemove,
-                     closeWindow,
                      saving = false,
                      errors = {},
                  }) => {
@@ -33,15 +32,9 @@ const SopForm = ({
             <form
                 className="sopForm"
                 onSubmit={onSave}
-                style={closeWindow ? {width: "80%", padding: "2rem"} : {}}
             >
                 <section className="top">
                     <h2>{sop.id ? "Edit" : "Add"} Sop (Standard Operating Procedures)</h2>
-                    {closeWindow ? (
-                        <button className="btn btn-delete" onClick={closeWindow}>
-                            x
-                        </button>
-                    ) : null}
                 </section>
 
                 <TextInput
@@ -94,7 +87,6 @@ SopForm.propTypes = {
     onAbbreviationChange: PropTypes.func.isRequired,
     onAbbreviationAdd: PropTypes.func.isRequired,
     onAbbreviationRemove: PropTypes.func.isRequired,
-    closeWindow: PropTypes.func,
     onStepRemove: PropTypes.func.isRequired,
     saving: PropTypes.bool,
 };

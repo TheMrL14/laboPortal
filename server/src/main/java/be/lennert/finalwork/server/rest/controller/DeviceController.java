@@ -2,7 +2,9 @@ package be.lennert.finalwork.server.rest.controller;
 
 
 import be.lennert.finalwork.server.core.dao.DeviceDAO;
+import be.lennert.finalwork.server.core.dao.SopDAO;
 import be.lennert.finalwork.server.core.entities.Device;
+import be.lennert.finalwork.server.core.entities.SOP;
 import be.lennert.finalwork.server.rest.dto.DeviceDTO;
 import be.lennert.finalwork.server.rest.exceptions.EntityNotFound;
 import be.lennert.finalwork.server.rest.exceptions.InputNotCorrect;
@@ -18,15 +20,17 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/devices")
-@CrossOrigin(origins = {"https://www.lennertvh.xyz", "http://localhost:3030", "http://193.191.183.46", "http://localhost"}, maxAge = 3600)
+@CrossOrigin(origins = {"https://www.lennertvh.xyz", "http://localhost:3000", "http://193.191.183.46", "http://localhost"}, maxAge = 3600)
 public class DeviceController {
 
     private final DeviceDAO dao;
+    private final SopDAO sopDAO;
     private final Mapper<Device, DeviceDTO> map;
 
     @Autowired
-    public DeviceController(DeviceDAO dao) {
+    public DeviceController(DeviceDAO dao, SopDAO sopDAO) {
         this.dao = dao;
+        this.sopDAO = sopDAO;
         this.map = new DeviceClassMapper();
     }
 
@@ -61,7 +65,13 @@ public class DeviceController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DeviceDTO> addNewDevice(@RequestBody DeviceDTO newDevice) {
 
+        if (newDevice.getSop().getTitle() != null) {
+            SOP sop = sopDAO.findById(newDevice.getSop().getId()).get();
+            sop.hasDevice();
+            newDevice.setSOP(sop);
+        }
         Device device = dao.save(new Device(newDevice));
+
         return ResponseEntity.status(201).body(map.fromEntity(device));
     }
 

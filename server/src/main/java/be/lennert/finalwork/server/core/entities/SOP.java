@@ -34,7 +34,6 @@ public class SOP extends BaseEntity {
     @JoinTable(name = "jnd_sop_revisors",
             joinColumns = @JoinColumn(name = "sop_fk"),
             inverseJoinColumns = @JoinColumn(name = "revisors_fk"))
-
     private List<User> revisors;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.ALL}, targetEntity = Step.class)
@@ -53,6 +52,9 @@ public class SOP extends BaseEntity {
     @ToString.Exclude
     private byte[] image;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sop_type", nullable = false)
+    private SopType type;
 
     public void setProcedureWithStepNr(List<Step> steps) {
         this.procedure = new ArrayList<>();
@@ -82,6 +84,11 @@ public class SOP extends BaseEntity {
         this.image = sopDetails.getImage();
         this.imageName = sopDetails.getImageName();
         this.abbreviations = sopDetails.getAbbreviations();
+        this.type = SopType.INDEPENDENT;
+    }
+
+    public void hasDevice() {
+        this.type = SopType.DEVICE;
     }
 
     public void addAuthor(User u) {
@@ -90,6 +97,11 @@ public class SOP extends BaseEntity {
 
     public void addRevisor(User u) {
         authors.add(u);
+    }
+
+    public enum SopType {
+        INDEPENDENT,
+        DEVICE
     }
 
 }

@@ -116,8 +116,17 @@ function EditSopPage({
         event.preventDefault();
         if (!formIsValid()) return;
 
-        if (props.isForm) saveSop(sop);
-        else {
+        if (props.isForm) {
+            setSaving(true);
+            saveSop(sop)
+                .then(() => {
+                    closeWindow()
+                })
+                .catch((error) => {
+                    setSaving(false);
+                    setErrors({onSave: error.message});
+                });
+        } else {
             setSaving(true);
             saveSop(sop)
                 .then(() => {

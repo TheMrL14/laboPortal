@@ -24,4 +24,8 @@ public class DeviceDTO {
         this.image = image;
         this.imageName = imageName;
     }
+
+    public void setSOP(SOP sop) {
+        this.sop = sop;
+    }
 }

@@ -12,6 +12,7 @@ import SideNavDevice from "./SideNavDevice";
 
 import {withRouter} from "react-router";
 import EditSopPage from "../sop/EditSopPage";
+import {Dialog} from "primereact/dialog";
 
 export function EditDevicePage({
                                    devices,
@@ -92,18 +93,16 @@ export function EditDevicePage({
     }
 
     function handleSopSave(sop) {
+        console.log("ja")
+        closeOverlay()
         saveSop(sop)
-            .then(() => {
-                setIsNewSop(false);
-            })
             .catch((error) => {
                 setSaving(false);
                 setErrors({onSave: error.message});
             });
     }
 
-    function closeOverlay(e) {
-        e.preventDefault();
+    function closeOverlay() {
         setIsNewSop(false);
         setSop(null);
     }
@@ -125,19 +124,17 @@ export function EditDevicePage({
                     saving={saving}
                     isNewSop={isNewSop}
                 />
-                {isNewSop ? (
-                    <section className="overlay">
-                        <EditSopPage
-                            sop={sop}
-                            sops={sops}
-                            isForm={true}
-                            loadSops={loadSops}
-                            saveSop={handleSopSave}
-                            history={history}
-                            closeWindow={closeOverlay}
-                        />
-                    </section>
-                ) : null}
+                <Dialog visible={isNewSop} onHide={() => closeOverlay()} on modal>
+                    <EditSopPage
+                        sop={sop}
+                        sops={sops}
+                        isForm={true}
+                        loadSops={loadSops}
+                        handleSaveSop={handleSopSave}
+                        history={history}
+                        closeWindow={closeOverlay}
+                    />
+                </Dialog>
             </section>
         </>
     );
