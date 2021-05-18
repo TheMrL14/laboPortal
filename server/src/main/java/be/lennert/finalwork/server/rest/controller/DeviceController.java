@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/devices")
@@ -64,9 +65,9 @@ public class DeviceController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DeviceDTO> addNewDevice(@RequestBody DeviceDTO newDevice) {
-
-        if (newDevice.getSop().getTitle() != null) {
-            SOP sop = sopDAO.findById(newDevice.getSop().getId()).get();
+        Optional<SOP> value = sopDAO.findById(newDevice.getSop().getId());
+        if (value.isPresent()) {
+            SOP sop = value.get();
             sop.hasDevice();
             newDevice.setSOP(sop);
         }
