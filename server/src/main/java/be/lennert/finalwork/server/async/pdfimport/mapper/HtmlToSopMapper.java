@@ -70,10 +70,10 @@ public class HtmlToSopMapper {
             Boolean isStep = isStep(step);
             Boolean isSubHeader = isSubHeader(step);
 
-            if (isStep) {
+            if (Boolean.TRUE.equals(isStep)) {
                 isFirstStep = true;
                 stepList.add(new Step(step.text().replace("-", ""), false));
-            } else if (isSubHeader) {
+            } else if (Boolean.TRUE.equals(isSubHeader)) {
                 isFirstStep = true;
                 stepList.add(new Step(step.text().replaceAll(REGEX_NUMBER_POINT_SPACE, ""), true));
             } else if (isFirstStep) {
@@ -90,7 +90,6 @@ public class HtmlToSopMapper {
     }
 
     private Boolean isSubHeader(Element step) {
-        Boolean isOk = step.text().matches(REGEX_NUMBER_SPACE_TEXT);
         return !step.select("b").isEmpty() && step.text().matches(REGEX_NUMBER_SPACE_TEXT);
     }
 
