@@ -8,6 +8,11 @@ import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 
+enum StepType {
+    SUBHEADER,
+    STEP
+}
+
 @Entity
 @JsonIgnoreProperties(value = {"sop"})
 public @Data
@@ -22,21 +27,14 @@ class Step extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private StepType stepType = StepType.STEP;
-
-    public boolean isStepType(StepType stepTypeToCompare) {
-        return stepType.equals(stepTypeToCompare);
-    }
-
     @ManyToOne
     @JoinColumn(name = "sop_id")
     @JsonIgnore
     @ToString.Exclude
     private SOP sop;
-
     @Column(name = "step_image_name", nullable = true)
     @ToString.Exclude
     private String imageName;
-
     @Lob
     @JsonIgnore
     @Column(name = "step_image", nullable = true, columnDefinition = "mediumblob")
@@ -53,10 +51,9 @@ class Step extends BaseEntity {
         this.stepType = isHeader ? StepType.SUBHEADER : StepType.STEP;
     }
 
+    public boolean isStepType(StepType stepTypeToCompare) {
+        return stepType.equals(stepTypeToCompare);
+    }
 
-}
 
-enum StepType {
-    SUBHEADER,
-    STEP
 }

@@ -7,9 +7,7 @@ const FileInputDialog = (props) => {
 
 
     function uploadFile(event) {
-        importSop(event.files[0]).then(r => {
-            console.log(r)
-        })
+        importSop(event.files[0]).then(r => props.onHide())
 
     }
 

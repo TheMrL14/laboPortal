@@ -56,6 +56,10 @@ public class SOP extends BaseEntity {
     @Column(name = "sop_type", nullable = false)
     private SopType type;
 
+    public SOP(SopDTO e) {
+        setFromSop(e);
+    }
+
     public void setProcedureWithStepNr(List<Step> steps) {
         this.procedure = new ArrayList<>();
         for (Step step : steps) {
@@ -68,10 +72,6 @@ public class SOP extends BaseEntity {
         return Math.toIntExact(procedure.stream()
                 .filter(step -> step.isStepType(stepType))
                 .count() + 1);
-    }
-
-    public SOP(SopDTO e) {
-        setFromSop(e);
     }
 
     public void setFromSop(SopDTO sopDetails) {
