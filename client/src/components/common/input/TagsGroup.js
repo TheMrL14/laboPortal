@@ -8,14 +8,19 @@ const TagsGroup = ({tags, label, onChange, placeholder, value, error}) => {
         wrapperClass += " " + "has-error";
     }
 
+    const AbbreviationTag = (description, abbreviation) => (
+        <Tag>
+            <abbr title={description}>{abbreviation}</abbr>
+        </Tag>
+    )
+
+
     return (
         <div className={wrapperClass}>
             <label htmlFor={"Abbreviations"}>{label}</label>
             <div className="field" name="Abbreviations">
                 {tags.map((tag) => {
-                    <Tag>
-                        <abbr title={tag.description}>{tag.abbreviation}</abbr>
-                    </Tag>;
+                    AbbreviationTag(tag.description, tag.abbreviation)
                 })}
 
                 {error && <div className="alert alert-danger">{error}</div>}

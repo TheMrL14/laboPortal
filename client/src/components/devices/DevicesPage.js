@@ -56,10 +56,12 @@ function DevicesPage({devices, loadDevices, ...props}) {
 
 DevicesPage.propTypes = {
     devices: PropTypes.array.isRequired,
+    filteredDevices: PropTypes.array.isRequired,
     loadDevices: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+
     devices: state.devices,
     filteredDevices: state.devices
 });

@@ -26,7 +26,7 @@ function SopsPage({sops, loadSops, ...props}) {
     const [typeFilter, setTypeFilter] = useState('');
 
     const statuses = [
-        'DEVICE', 'INDEPENDENT'
+        '', 'DEVICE', 'INDEPENDENT'
     ]
 
 
@@ -72,7 +72,7 @@ function SopsPage({sops, loadSops, ...props}) {
     }
 
     const statusFilter = <Dropdown value={typeFilter} options={statuses} onChange={onStatusChange}
-                                   placeholder="Select a Type" className="p-column-filter" showClear/>;
+                                   placeholder="Select a Type" className="p-column-filter"/>;
     return (
         <>
             <SideNavSops/>
@@ -96,6 +96,7 @@ function SopsPage({sops, loadSops, ...props}) {
 
 SopsPage.propTypes = {
     sops: PropTypes.array.isRequired,
+    filteredSops: PropTypes.array.isRequired,
     loadSops: PropTypes.func.isRequired,
 };
 

@@ -30,7 +30,6 @@ const PrivateRoute = (props) => {
                 }
                 */
                 // 3. Render component
-
                 return <Component auth={auth} {...props} />;
             }}
         />

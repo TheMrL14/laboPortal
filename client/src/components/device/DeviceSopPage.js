@@ -9,7 +9,6 @@ import {newDevice, newSop} from "../../tools/Models";
 import SOPDetail from "../sop/SOPDetail";
 
 export function DeviceSopPage({devices, loadDevices, ...props}) {
-    const [device, setDevice] = useState({...props.device});
     const [sop, setSop] = useState({...props.sop});
 
     useEffect(() => {
@@ -18,7 +17,6 @@ export function DeviceSopPage({devices, loadDevices, ...props}) {
                 alert("Loading devices failed" + error);
             });
         } else {
-            setDevice({...props.device});
             setSop({...props.sop});
         }
     }, [props.device, props.sop]);
@@ -58,7 +56,6 @@ function mapStateToProps(state, ownProps) {
     const sop = device.sop == undefined ? newSop : device.sop;
     return {
         sop,
-        device,
         devices: state.devices,
     };
 }

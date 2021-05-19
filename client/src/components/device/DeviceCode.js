@@ -9,7 +9,7 @@ let svgElement;
 let isDone = false;
 const codeWriter = new BrowserQRCodeSvgWriter();
 
-const DeviceCode = (props) => {
+const DeviceCode = () => {
     useEffect(() => {
         isDone = false;
         const endPoint = location.pathname.substring(0, location.pathname.lastIndexOf('/'));
@@ -22,7 +22,7 @@ const DeviceCode = (props) => {
         svgElement = document.querySelector("#qr-result > svg");
         const svgData = new XMLSerializer().serializeToString(svgElement);
         const blob = new Blob([svgData]);
-        saveAs(blob, "device-name.svg");
+        saveAs(blob, "device.svg");
         isDone = true;
     };
 
