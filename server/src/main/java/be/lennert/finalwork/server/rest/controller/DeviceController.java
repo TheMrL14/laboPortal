@@ -5,6 +5,7 @@ import be.lennert.finalwork.server.core.dao.DeviceDAO;
 import be.lennert.finalwork.server.core.dao.SopDAO;
 import be.lennert.finalwork.server.core.entities.Device;
 import be.lennert.finalwork.server.core.entities.SOP;
+import be.lennert.finalwork.server.core.services.StorageService;
 import be.lennert.finalwork.server.rest.dto.DeviceDTO;
 import be.lennert.finalwork.server.rest.exceptions.EntityNotFound;
 import be.lennert.finalwork.server.rest.exceptions.InputNotCorrect;
@@ -15,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +30,14 @@ public class DeviceController {
     private final DeviceDAO dao;
     private final SopDAO sopDAO;
     private final Mapper<Device, DeviceDTO> map;
+    private final StorageService storageService;
+
 
     @Autowired
-    public DeviceController(DeviceDAO dao, SopDAO sopDAO) {
+    public DeviceController(DeviceDAO dao, SopDAO sopDAO, StorageService storageService) {
         this.dao = dao;
         this.sopDAO = sopDAO;
+        this.storageService = storageService;
         this.map = new DeviceClassMapper();
     }
 
@@ -44,7 +50,7 @@ public class DeviceController {
 
 
     @GetMapping(value = "/{id}",
-            produces = "application/json")
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DeviceDTO> findDeviceById(@PathVariable(name = "id") Long id) throws EntityNotFound, InputNotCorrect {
         Device device = findById(id);
         return ResponseEntity.ok().body(map.fromEntity(device));
@@ -52,7 +58,8 @@ public class DeviceController {
 
 
     @PutMapping(value = "/{id}",
-            produces = "application/json")
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<DeviceDTO> editDeviceById(@PathVariable(name = "id") Long id, @RequestBody DeviceDTO deviceDetails) throws EntityNotFound, InputNotCorrect {
         Device device = findById(id);
         device.setFromDevice(deviceDetails);
@@ -63,16 +70,22 @@ public class DeviceController {
     //POST request
     @PostMapping(value = "",
             produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DeviceDTO> addNewDevice(@RequestBody DeviceDTO newDevice) {
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<DeviceDTO> addNewDevice(HttpServletRequest servletRequest, @RequestPart("video") List<MultipartFile> videos, @RequestPart("device") DeviceDTO newDevice) {
 
-        if (newDevice.getSop() != null) {
+        videos.forEach(video -> storageService.store(video));
+
+//        newDevice.setVideoFiles();
+
+        if (newDevice.getSop().getId() != null) {
             Optional<SOP> value = sopDAO.findById(newDevice.getSop().getId());
             if (value.isPresent()) {
                 SOP sop = value.get();
                 sop.hasDevice();
                 newDevice.setSOP(sop);
             }
+        } else {
+            newDevice.setSOP(null);
         }
 
         Device device = dao.save(new Device(newDevice));

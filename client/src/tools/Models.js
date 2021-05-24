@@ -4,7 +4,9 @@ const newDevice = {
     name: "",
     description: "",
     image: "",
-    imageName: ""
+    imageName: "",
+    externalLinks: [],
+    videos: []
 };
 
 const newStep = {

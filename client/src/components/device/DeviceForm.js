@@ -5,6 +5,7 @@ import TextAreaInput from "../common/input/TextAreaInput";
 import {Dropdown} from "primereact/dropdown";
 import FileInput from "../common/input/FileInput";
 import {FetchByteArray} from "../common/Utils";
+import FilesInput from "../common/input/FilesInput";
 
 const DeviceForm = ({
                         device,
@@ -23,6 +24,12 @@ const DeviceForm = ({
         FetchByteArray(file).then(
             (fileByteArray) => (device.image = fileByteArray)
         );
+    };
+
+    const setVideos = (e) => {
+        console.log(e)
+        device.videos = e.files;
+        console.log(device)
     };
     return (
         <form onSubmit={onSave}>
@@ -50,9 +57,18 @@ const DeviceForm = ({
                 name="image"
                 label="Image"
                 value={device.imageName}
-                setImage={setImage}
+                setFile={setImage}
                 error={errors.description}
             />
+
+            <FilesInput
+                name="videos"
+                label="Videos"
+                value={device.imageName}
+                setFiles={setVideos}
+                error={errors.description}
+            />
+
             <Dropdown
                 optionLabel="title"
                 filter

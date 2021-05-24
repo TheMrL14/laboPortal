@@ -13,6 +13,7 @@ const DeviceCode = () => {
     useEffect(() => {
         isDone = false;
         const endPoint = location.pathname.substring(0, location.pathname.lastIndexOf('/'));
+        console.log(process.env.REACT_APP_URL + endPoint)
         svgElement = codeWriter.writeToDom("#qr-result", process.env.REACT_APP_URL + endPoint, 400, 400);
         isDone = true;
     });

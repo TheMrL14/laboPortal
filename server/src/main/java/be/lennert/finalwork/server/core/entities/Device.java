@@ -6,6 +6,7 @@ import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "devices")
@@ -21,9 +22,6 @@ public class Device extends BaseEntity {
     @Column(length = 100000)
     private String description;
 
-    @Column(name = "meta_info")
-    private String metaInfo;
-
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.ALL})
     @JoinColumn(name = "sop_fk")
     @ToString.Exclude
@@ -33,11 +31,20 @@ public class Device extends BaseEntity {
     @ToString.Exclude
     private String imageName;
 
+    @ElementCollection
+    @CollectionTable(name = "external_links", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "external_link")
+    private List<String> externalLinks;
+
     @Lob
     @JsonIgnore
     @Column(name = "device_image", nullable = true, columnDefinition = "mediumblob")
     @ToString.Exclude
     private byte[] image;
+
+    @ElementCollection
+    @CollectionTable(name = "device_videos", joinColumns = @JoinColumn(name = "id"))
+    private List<String> videos;
 
 
     public Device(DeviceDTO device) {
@@ -47,10 +54,11 @@ public class Device extends BaseEntity {
     public void setFromDevice(DeviceDTO device) {
         this.name = device.getName();
         this.description = device.getDescription();
-        this.metaInfo = device.getMetaInfo();
-        this.sop = (device.getSop().getTitle() != null) ? device.getSop() : null;
+        this.sop = (device.getSop() != null && device.getSop().getTitle() != null) ? device.getSop() : null;
         this.image = device.getImage();
         this.imageName = device.getImageName();
+        this.externalLinks = device.getExternalLinks();
+        this.videos = device.getVideoFiles();
     }
 
 }

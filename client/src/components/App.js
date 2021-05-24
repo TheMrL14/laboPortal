@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import HomePage from "./home/HomePage";
 import Header from "./common/navigation/Header";
 import PageNotFound from "./PageNotFound";
@@ -83,7 +83,8 @@ class App extends Component {
                         <Route path="/devices/:slug/code" component={DeviceCode} {...this.props}/>
                         <Route path="/devices/:slug/info" component={InfoPage} {...this.props}/>
                         <Route path="/devices/:slug/sop" component={DeviceSop} {...this.props}/>
-                        <Route path="/devices/:slug/" component={InfoPage} {...this.props}/>
+                        <Redirect from="/devices/:slug/" to="/devices/:slug/info" {...this.props}/>
+
                         <Route path="/devices" component={DevicesPage} {...this.props}/>
 
                         <Route path="/sops/:slug/info" component={SopDetailPage} {...this.props}/>

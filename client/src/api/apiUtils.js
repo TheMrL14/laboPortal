@@ -31,9 +31,21 @@ export function authenticatedPostRequest(endpoint, object) {
         method: object.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
         headers: {
             "content-type": "application/json",
-            Authorization: "Bearer " + token,
+            //Authorization: "Bearer " + token,
         },
         body: JSON.stringify(object),
+    })
+        .then(handleResponse)
+        .catch(handleError);
+}
+
+export function authenticatedFormPostRequest(endpoint, formData, id) {
+    return fetch(rootEndpoint + endpoint + "/" + (id || ""), {
+        method: id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
+        headers: {
+            //Authorization: "Bearer " + token,
+        },
+        body: formData,
     })
         .then(handleResponse)
         .catch(handleError);
