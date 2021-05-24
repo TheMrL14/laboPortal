@@ -6,6 +6,8 @@ import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "devices")
@@ -38,6 +40,10 @@ public class Device extends BaseEntity {
     @Column(name = "device_image", nullable = true, columnDefinition = "mediumblob")
     @ToString.Exclude
     private byte[] image;
+
+    @ElementCollection
+    @Column(name = "external_links", nullable = true)
+    private List<String> externalLinks = new ArrayList<String>();
 
 
     public Device(DeviceDTO device) {

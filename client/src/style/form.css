@@ -16,6 +16,10 @@ textarea {
     color: #495057;
 }
 
+.p-inputtext {
+    font-size: 2rem !important;
+}
+
 button {
     border: none;
     background: rgba(200, 200, 200, 0.2);
@@ -100,6 +104,10 @@ button {
 @media only screen and (min-width: 992px) {
     .form-group {
         width: 100%;
+    }
+
+    .p-inputtext {
+        font-size: 1rem !important;
     }
 }
 

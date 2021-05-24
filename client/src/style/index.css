@@ -1,9 +1,12 @@
 :root {
+    --font-color-menu: #FFFFFF;
     --main-color: #1d3557;
     --secondary-color: #e63946;
-    --third-color: #457b9d;
-    --fourth-color: #a8dadc;
-    --fifth-color: #f1faee;
+    --third-color: #FC3AB2;
+    --fourth-color: #20FC8F;
+    --fifth-color: #2DF0FC;
+    --sixth-color: #FC6A08;
+    --seventh-color: #00f5d4
 }
 
 

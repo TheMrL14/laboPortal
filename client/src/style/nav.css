@@ -1,3 +1,7 @@
+.mainLogo img {
+    width: 100%;
+}
+
 header nav {
     background: var(--main-color);
     position: fixed;
@@ -6,14 +10,14 @@ header nav {
     height: fit-content;
     width: 100%;
     flex-direction: row;
-    padding-top: 0.5rem;
     z-index: 1000;
+    justify-content: space-evenly;
 }
 
 header nav a {
-    font-size: 1.1rem;
+    font-size: 2rem;
     text-align: center;
-    color: white;
+    color: var(--font-color-menu);
     text-decoration: none;
     padding: 2rem 1em;
 }
@@ -33,7 +37,7 @@ header a.active {
 }
 
 .menu a {
-    font-size: 1.2rem;
+    font-size: 2rem;
 
     color: var(--secondary-color);
     text-decoration: none;
@@ -67,7 +71,7 @@ aside ul {
 aside {
     background-color: #fff;
     z-index: 3;
-
+    font-size: 2rem;
 }
 
 /* menu icon */
@@ -75,37 +79,38 @@ aside {
 aside .menu-icon {
     cursor: pointer;
     display: inline-block;
-    padding: 1rem;
+    padding: 2rem;
     position: relative;
     user-select: none;
 }
 
-aside .menu-icon .navicon {
+aside .menu-icon .navIcon {
     background: #333;
     display: block;
-    height: 2px;
+    height: 4px;
     position: relative;
     transition: background 0.2s ease-out;
-    width: 1.2rem;
+    width: 40px;
 }
 
-aside .menu-icon .navicon:before,
-aside .menu-icon .navicon:after {
+aside .menu-icon .navIcon:before,
+aside .menu-icon .navIcon:after {
     background: #333;
     content: "";
     display: block;
     height: 100%;
+    width: 100%;
     position: absolute;
     transition: all 0.2s ease-out;
-    width: 100%;
+
 }
 
-aside .menu-icon .navicon:before {
-    top: 5px;
+aside .menu-icon .navIcon:before {
+    top: 10px;
 }
 
-aside .menu-icon .navicon:after {
-    top: -5px;
+aside .menu-icon .navIcon:after {
+    top: -10px;
 }
 
 /* menu btn */
@@ -118,20 +123,20 @@ aside .menu-btn:checked ~ .menu {
     max-height: 240px;
 }
 
-aside .menu-btn:checked ~ .menu-icon .navicon {
+aside .menu-btn:checked ~ .menu-icon .navIcon {
     background: transparent;
 }
 
-aside .menu-btn:checked ~ .menu-icon .navicon:before {
+aside .menu-btn:checked ~ .menu-icon .navIcon:before {
     transform: rotate(-45deg);
 }
 
-aside .menu-btn:checked ~ .menu-icon .navicon:after {
+aside .menu-btn:checked ~ .menu-icon .navIcon:after {
     transform: rotate(45deg);
 }
 
-aside .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-aside .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+aside .menu-btn:checked ~ .menu-icon:not(.steps) .navIcon:before,
+aside .menu-btn:checked ~ .menu-icon:not(.steps) .navIcon:after {
     top: 0;
 }
 
@@ -155,6 +160,7 @@ aside .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
         flex-direction: column;
         width: 8rem;
         padding-top: 2rem;
+        justify-content: start;
     }
 
     aside .menu a {

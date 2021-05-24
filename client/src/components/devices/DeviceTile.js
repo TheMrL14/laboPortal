@@ -5,13 +5,14 @@ const DeviceTile = (props) => {
 
 
     const bgColor = [
-        "--secondary-color",
         "--third-color",
         "--fourth-color",
-        "--fifth-color"
+        "--fifth-color",
+        "--sixth-color",
+        " --seventh-color"
     ];
 
-    const randomBgColor = bgColor[Math.floor(Math.random() * bgColor.length)];
+    const randomBgColor = bgColor[(props.device.name.length * new Date().getHours()) % bgColor.length];
     return (
         <article className="p-col-6 p-md-6 p-lg-4 p-xl-4 p-xxl">
             <a href={"./devices/" + props.device.id + "/info"} className="card">

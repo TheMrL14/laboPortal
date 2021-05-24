@@ -61,10 +61,19 @@ class Header extends Component {
             </a>
         );
 
+        const getLogoUrl = () => {
+            return `/assets/logo.jpg`
+        }
+
         return (
             <>
                 <header>
                     <nav>
+                        <span className="mainLogo">
+                            <img
+                                src={getLogoUrl()}
+                                alt="Logo"/>;
+                        </span>
                         {auth.isAuthenticated ? profileButton : loginButton}
                         <NavLink to="/devices" activeClassName="active">
                         <span className="navLogo">

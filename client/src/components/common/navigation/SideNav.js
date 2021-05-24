@@ -7,7 +7,7 @@ const SideNav = (props) => {
         <aside>
             <input className="menu-btn" type="checkbox" id="menu-btn"/>
             <label className="menu-icon" htmlFor="menu-btn">
-                <span className="navicon"></span>
+                <span className="navIcon"></span>
             </label>
             <ul className="menu">
                 {props.links.map((link) =>
