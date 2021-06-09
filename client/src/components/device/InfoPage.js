@@ -12,6 +12,7 @@ import {withRouter} from "react-router";
 function DetailDevicePage({devices, loadDevices, ...props}) {
     const [device, setDevice] = useState({...props.device});
 
+
     useEffect(() => {
         if (devices.length === 0) {
             loadDevices().catch((error) => {
@@ -22,18 +23,30 @@ function DetailDevicePage({devices, loadDevices, ...props}) {
         }
 
     }, [props.device]);
+
     return (
         <>
             <SideNavDevice/>
             <section className="mainContent">
-                <h1>{device.name}</h1>
-                {device.image != null ? (
+                <h1 className={"capitalizeTitle"}>{device.name}</h1>
+
+                {device.image != null && device.image.length >= 1 ? (
                     <img
                         className="imgStep"
                         src={`data:image/jpeg;base64,${device.image}`}
                     ></img>
                 ) : null}
                 <p>{(device.description != null) ? device.description : device.sop.description}</p>
+
+                <h2>External Links</h2>
+                <ul>
+                    {device.externalLinks.map((link, index) => (
+                        <li key={index}>
+                            <a href={link}>{link}</a>
+                            <br/>
+                        </li>
+                    ))}
+                </ul>
             </section>
 
         </>

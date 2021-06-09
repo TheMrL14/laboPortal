@@ -27,6 +27,8 @@ const SopForm = ({
         step.imageName = file.name;
         FetchByteArray(file).then((fileByteArray) => (step.image = fileByteArray));
     };
+
+    const steps = sop.procedure.map((i) => (i.message));
     return (
         <>
             <form
@@ -60,12 +62,14 @@ const SopForm = ({
                     setImage={setImage}
                 />
                 <StepInput
-                    name="Procedure"
+                    name="procedure"
+                    label="Procedure"
                     errors={errors}
-                    steps={sop.procedure}
+                    steps={steps}
                     onStepChange={onStepChange}
                     onStepAdd={onStepAdd}
                     onStepRemove={onStepRemove}
+                    hasImage={true}
                     setImage={setImage}
                 />
                 <button type="submit" disabled={saving} className="btn btn-primary">

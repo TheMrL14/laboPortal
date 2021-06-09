@@ -4,7 +4,8 @@ const newDevice = {
     name: "",
     description: "",
     image: "",
-    imageName: ""
+    imageName: "",
+    externalLinks: []
 };
 
 const newStep = {
@@ -13,7 +14,7 @@ const newStep = {
 };
 
 const newAbbreviation = {
-    abbreviation: "",
+    abbreviationShort: "",
     description: "",
 };
 const newSop = {

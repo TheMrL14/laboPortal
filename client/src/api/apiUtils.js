@@ -2,6 +2,9 @@ let token = localStorage.getItem("id_token") || null;
 let rootEndpoint = process.env.REACT_APP_API_ROOT_ENDPOINT;
 
 export async function handleResponse(response) {
+
+    if (response.status === 204) return response;
+
     if (response.ok) return response.json();
 
     if (response.status === 400) {
@@ -27,7 +30,7 @@ export function getRequest(endpoint) {
 }
 
 export function authenticatedPostRequest(endpoint, object) {
-    return fetch(rootEndpoint + endpoint + "/" + (object.id || ""), {
+    return fetch(rootEndpoint + endpoint + (object.id || ""), {
         method: object.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
         headers: {
             "content-type": "application/json",
@@ -40,7 +43,6 @@ export function authenticatedPostRequest(endpoint, object) {
 }
 
 export function authenticatedPostFileRequest(endpoint, file) {
-    console.log(file)
     const formData = new FormData();
     formData.append('file', file);
     return fetch(rootEndpoint + endpoint, {

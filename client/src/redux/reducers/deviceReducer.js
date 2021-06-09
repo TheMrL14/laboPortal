@@ -10,6 +10,8 @@ export default (state = [], action) => {
             );
         case types.LOAD_DEVICES_SUCCES:
             return action.devices;
+        case types.DELETE_DEVICE:
+            return [...state.filter(value => (value.id != action.device.id))];
         default:
             return state;
     }

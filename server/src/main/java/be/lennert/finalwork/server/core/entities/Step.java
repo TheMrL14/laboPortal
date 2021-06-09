@@ -55,5 +55,9 @@ class Step extends BaseEntity {
         return stepType.equals(stepTypeToCompare);
     }
 
+    public boolean isEmpty() {
+        return this.message.isBlank() || this.message == null;
+    }
+
 
 }

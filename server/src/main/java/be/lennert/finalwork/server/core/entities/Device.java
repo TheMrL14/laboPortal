@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static be.lennert.finalwork.server.core.utils.ObjectUtils.copyNonNullProperties;
+import static be.lennert.finalwork.server.core.utils.ObjectUtils.nullifyStringsAndArrays;
+
 @Entity
 @Table(name = "devices")
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -22,9 +25,6 @@ public class Device extends BaseEntity {
     @Lob
     @Column(length = 100000)
     private String description;
-
-    @Column(name = "meta_info")
-    private String metaInfo;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.ALL})
     @JoinColumn(name = "sop_fk")
@@ -50,13 +50,29 @@ public class Device extends BaseEntity {
         setFromDevice(device);
     }
 
-    public void setFromDevice(DeviceDTO device) {
+    public void setFromDevice(Device device) {
         this.name = device.getName();
         this.description = device.getDescription();
-        this.metaInfo = device.getMetaInfo();
-        this.sop = (device.getSop().getTitle() != null) ? device.getSop() : null;
-        this.image = device.getImage();
+        this.sop = device.getSop();
         this.imageName = device.getImageName();
+        this.image = device.getImage();
+        this.externalLinks = device.getExternalLinks();
+    }
+
+
+    public void fillWithDeviceDTO(DeviceDTO sourceDevice) {
+        Device newDevice = copyNonNullProperties(new Device(sourceDevice), this);
+        setFromDevice(newDevice);
+    }
+
+    public void setFromDevice(DeviceDTO device) {
+        DeviceDTO normalizedDevice = nullifyStringsAndArrays(device);
+        this.name = normalizedDevice.getName();
+        this.description = normalizedDevice.getDescription();
+        this.externalLinks = normalizedDevice.getExternalLinks();
+        this.sop = normalizedDevice.getSop();
+        this.image = normalizedDevice.getImage();
+        this.imageName = normalizedDevice.getImageName();
     }
 
 }

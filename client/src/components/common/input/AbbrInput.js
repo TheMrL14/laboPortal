@@ -15,10 +15,10 @@ const AbbrInput = ({steps, name, onStepChange, onStepAdd, onStepRemove}) => {
                         <div className="p-inputgroup">
                             <InputText
                                 onChange={(e) => onStepChange(e, i)}
-                                name="abbreviation"
+                                name="abbreviationShort"
                                 className="form-control"
                                 placeholder="Abbreviation"
-                                value={step.abbreviation}
+                                value={step.abbreviationShort}
                             />
                         </div>
                     </div>

@@ -22,4 +22,8 @@ class Abbreviation extends BaseEntity {
         this.abbreviationShort = abbreviationAndDiscription.substring(0, abbreviationAndDiscription.indexOf(" "));
         this.description = abbreviationAndDiscription.substring(abbreviationAndDiscription.indexOf(" ") + 1);
     }
+
+    public boolean isEmpty() {
+        return abbreviationShort == null || description == null || abbreviationShort.isBlank() || description.isBlank();
+    }
 }

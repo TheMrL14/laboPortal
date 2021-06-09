@@ -55,7 +55,8 @@ public class DeviceController {
             produces = "application/json")
     public ResponseEntity<DeviceDTO> editDeviceById(@PathVariable(name = "id") Long id, @RequestBody DeviceDTO deviceDetails) throws EntityNotFound, InputNotCorrect {
         Device device = findById(id);
-        device.setFromDevice(deviceDetails);
+        deviceDetails.setSOP(checkSOP(deviceDetails));
+        device.fillWithDeviceDTO(deviceDetails);
         dao.save(device);
         return ResponseEntity.status(201).body(map.fromEntity(device));
     }
@@ -66,23 +67,29 @@ public class DeviceController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DeviceDTO> addNewDevice(@RequestBody DeviceDTO newDevice) {
 
-        if (newDevice.getSop() != null) {
-            Optional<SOP> value = sopDAO.findById(newDevice.getSop().getId());
-            if (value.isPresent()) {
-                SOP sop = value.get();
-                sop.hasDevice();
-                newDevice.setSOP(sop);
-            }
-        }
 
+        newDevice.setSOP(checkSOP(newDevice));
         Device device = dao.save(new Device(newDevice));
 
         return ResponseEntity.status(201).body(map.fromEntity(device));
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteDevice(@PathVariable(name = "id") Long id) {
+    public ResponseEntity deleteDevice(@PathVariable(name = "id") Long id) {
         dao.deleteById(id);
+        return ResponseEntity.status(204).build();
+    }
+
+    private SOP checkSOP(DeviceDTO newDevice) {
+        if (newDevice.getSop() != null && newDevice.getSop().getId() != 0) {
+            Optional<SOP> value = sopDAO.findById(newDevice.getSop().getId());
+            if (value.isPresent()) {
+                SOP sop = value.get();
+                sop.hasDevice();
+                return sop;
+            }
+        }
+        return null;
     }
 
 

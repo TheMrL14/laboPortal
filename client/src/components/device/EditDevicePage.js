@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {loadDevices, saveDevice} from "../../redux/actions/deviceActions";
+import {deleteDevice, loadDevices, saveDevice} from "../../redux/actions/deviceActions";
 import {loadSops, saveSop} from "../../redux/actions/sopActions";
 import PropTypes from "prop-types";
 import SideNavDevices from "../devices/SideNavDevices";
@@ -13,22 +13,28 @@ import SideNavDevice from "./SideNavDevice";
 import {withRouter} from "react-router";
 import EditSopPage from "../sop/EditSopPage";
 import {Dialog} from "primereact/dialog";
+import {Button} from "primereact/button";
 
 export function EditDevicePage({
                                    devices,
                                    loadDevices,
                                    saveDevice,
+                                   deleteDevice,
                                    sops,
                                    loadSops,
                                    saveSop,
                                    history,
                                    ...props
                                }) {
+
     const [isNewSop, setIsNewSop] = useState(false);
     const [device, setDevice] = useState({...props.device});
     const [sop, setSop] = useState({...props.device});
     const [errors, setErrors] = useState({});
     const [saving, setSaving] = useState(false);
+
+    const [sopsToSelect, setSopsToSelect] = useState(sops);
+
 
     useEffect(() => {
         if (devices.length === 0) {
@@ -37,17 +43,23 @@ export function EditDevicePage({
             });
         } else {
             setDevice({...props.device});
-            setSop({...props.device.sop});
-        }
 
+        }
+    }, [props.device]);
+
+    useEffect(() => {
         if (sops.length === 0) {
             loadSops().catch((error) => {
-                alert("Loading Sops failed" + error);
+                alert("Loading sops failed" + error);
             });
         } else {
+            const loadedSops = [...sops];
+            loadedSops.unshift(newSop);
+            setSopsToSelect(loadedSops)
             setSop({...props.sop});
         }
-    }, [props.device, props.sop]);
+    }, [props.sopsToSelect, props.sop])
+
 
     function handleChange(event) {
         const {name, value} = event.target;
@@ -56,6 +68,16 @@ export function EditDevicePage({
             [name]: name === "sopId" ? parseInt(value, 10) : value,
         }));
     }
+
+    const handleLinkChange = (e, index) => {
+        const {value} = e.target;
+        const list = [...device.externalLinks];
+        list[index] = value;
+        setDevice((prevDevice) => ({
+            ...prevDevice,
+            ["externalLinks"]: list,
+        }));
+    };
 
     function formIsValid() {
         const {name, description} = device;
@@ -79,6 +101,7 @@ export function EditDevicePage({
         saveDevice(device)
             .then(() => {
                 history.push("/devices");
+                props.sop = sop;
             })
             .catch((error) => {
                 setSaving(false);
@@ -86,14 +109,21 @@ export function EditDevicePage({
             });
     }
 
+    function handleDeleteDevice(e) {
+        e.preventDefault();
+        deleteDevice(device);
+        history.push("/devices");
+
+    }
+
     function setSelectedSop(selected) {
+        console.log(selected)
         if (selected.id == 0) setIsNewSop(true);
         else setIsNewSop(false);
         setSop({...selected});
     }
 
     function handleSopSave(sop) {
-        console.log("ja")
         closeOverlay()
         saveSop(sop)
             .catch((error) => {
@@ -107,18 +137,41 @@ export function EditDevicePage({
         setSop(null);
     }
 
-    const sopsToSelect = [...sops];
-    sopsToSelect.unshift(newSop);
+    function addExternalLink() {
+        setDevice((prevDevice) => ({
+            ...prevDevice,
+            ["externalLinks"]: [
+                ...prevDevice.externalLinks, ""
+            ],
+        }));
+    }
+
+    function removeExternalLink(index) {
+        const list = [...device.externalLinks];
+        list.splice(index, 1);
+        setDevice((prevDevice) => ({
+            ...prevDevice,
+            ["externalLinks"]: list,
+        }));
+    }
+
+
     return (
+
         <>
             {device.id ? <SideNavDevice/> : <SideNavDevices/>}
             <section className="mainContent">
+                {device.id ? <Button className="p-button-danger" label="Delete" icon="pi pi-trash"
+                                     onClick={(event => handleDeleteDevice(event))}/> : null}
                 <DeviceForm
                     device={device}
                     sop={sop}
                     sops={sopsToSelect}
                     errors={errors}
                     onChange={handleChange}
+                    onLinksChange={handleLinkChange}
+                    handleAddLinkClick={addExternalLink}
+                    handleRemoveLinkClick={removeExternalLink}
                     onSave={handleSave}
                     setSelectedSop={setSelectedSop}
                     saving={saving}
@@ -146,6 +199,7 @@ EditDevicePage.propTypes = {
 
     loadDevices: PropTypes.func.isRequired,
     saveDevice: PropTypes.func.isRequired,
+    deleteDevice: PropTypes.func.isRequired,
 
     sop: PropTypes.object,
     sops: PropTypes.array.isRequired,
@@ -157,7 +211,7 @@ EditDevicePage.propTypes = {
 };
 
 export function getDeviceBySlug(devices, slug) {
-    return devices.find((device) => device.id === parseInt(slug)) || null;
+    return devices.find((device) => device.id === parseInt(slug)) || newDevice;
 }
 
 function mapStateToProps(state, ownProps) {
@@ -168,10 +222,11 @@ function mapStateToProps(state, ownProps) {
             : newDevice;
 
     const sop = device.sop == undefined ? newSop : device.sop;
-
+    device.externalLinks = device.externalLinks.length === 0 ? [""] : device.externalLinks;
     return {
         sop,
         sops: state.sops,
+        sopsToSelect: state.sops,
         device,
         devices: state.devices,
     };
@@ -182,6 +237,7 @@ const mapDispatchToProps = {
     saveDevice,
     loadSops,
     saveSop,
+    deleteDevice,
 };
 
 

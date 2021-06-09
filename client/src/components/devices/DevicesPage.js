@@ -19,9 +19,9 @@ function DevicesPage({devices, loadDevices, ...props}) {
                 alert("Loading devices failed" + error);
             });
         } else {
-            setFilteredDevices(props.filteredDevices)
+            setFilteredDevices(devices)
         }
-    }, [props.filteredDevices]);
+    }, [props.filteredDevices, devices]);
 
 
     const handleSearch = (event) => {
@@ -32,8 +32,6 @@ function DevicesPage({devices, loadDevices, ...props}) {
         setFilteredDevices(result);
 
     }
-
-
     return (
         <>
             <SideNavDevices/>
@@ -61,7 +59,6 @@ DevicesPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-
     devices: state.devices,
     filteredDevices: state.devices
 });

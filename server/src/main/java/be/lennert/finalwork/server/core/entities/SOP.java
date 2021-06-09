@@ -83,13 +83,19 @@ public class SOP extends BaseEntity {
         this.procedure.forEach(step -> step.setSop(this));
         this.image = sopDetails.getImage();
         this.imageName = sopDetails.getImageName();
-        this.abbreviations = sopDetails.getAbbreviations();
+        this.abbreviations = !isEmptyAbbr(sopDetails.getAbbreviations()) ? sopDetails.getAbbreviations() : null;
         this.type = SopType.INDEPENDENT;
     }
 
     public void hasDevice() {
         this.type = SopType.DEVICE;
     }
+
+
+    private boolean isEmptyAbbr(List<Abbreviation> abbreviations) {
+        return abbreviations.stream().allMatch(Abbreviation::isEmpty);
+    }
+
 
     public void addAuthor(User u) {
         authors.add(u);

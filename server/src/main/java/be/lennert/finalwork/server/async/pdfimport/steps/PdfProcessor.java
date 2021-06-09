@@ -33,6 +33,7 @@ public class PdfProcessor implements Processor<Document, SOP> {
             Boolean isHeader = isHeader(line);
             Boolean isValuableHeader = false;
             Boolean isUselessLine = isUselessLine(line);
+
             if (TRUE.equals(isUselessLine)) {
                 line.remove();
                 continue;
@@ -40,6 +41,7 @@ public class PdfProcessor implements Processor<Document, SOP> {
 
             for (PdfChapter chapter : PdfChapter.values()) {
                 isValuableHeader = isValuableHeader(line, chapter.getHeader());
+
                 if (TRUE.equals(isValuableHeader)) {
                     sopHtml.add(divWithAttr(chapter.getHeader()));
                     isProcedureChapter = chapter.equals(PROCEDURE);

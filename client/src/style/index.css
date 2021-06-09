@@ -24,6 +24,17 @@ li {
     list-style-type: none;
 }
 
+.capitalizeTitle {
+    text-transform: lowercase;
+}
+
+.capitalizeTitle::first-letter {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
 abbr {
 }
 

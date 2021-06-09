@@ -6,16 +6,20 @@ import {InputText} from "primereact/inputtext";
 const StepInput = ({
                        steps,
                        name,
+                       label,
                        errors,
                        onStepChange,
                        onStepAdd,
                        onStepRemove,
+                       hasImage,
                        setImage,
                    }) => {
     let wrapperClass = "form-group";
+
     return (
         <div className={wrapperClass}>
-            <label>{name}</label>
+            <label>{label}</label>
+
             <section className="">
                 {steps.map((step, i) => (
                     <div key={i} className="p-inputgroup">
@@ -23,7 +27,7 @@ const StepInput = ({
                             onChange={(e) => onStepChange(e, i)}
                             name={name}
                             className="form-control"
-                            value={step.message}
+                            value={step}
                         />
                         {steps.length !== 1 && (
                             <span
@@ -38,13 +42,14 @@ const StepInput = ({
                 +
               </span>
                         )}
-                        <FileInputIcon
-                            name="image"
-                            label="Add Image"
-                            value={i.imageName}
-                            setImage={(e) => setImage(e, i)}
-                            error={errors.description}
-                        />
+                        {hasImage ? (
+                            <FileInputIcon
+                                name="image"
+                                label="Add Image"
+                                value={i.imageName}
+                                setImage={(e) => setImage(e, i)}
+                                error={errors.description}/>
+                        ) : null}
                         <br/>
                     </div>
                 ))}
@@ -58,7 +63,7 @@ StepInput.propTypes = {
     name: PropTypes.string.isRequired,
     errors: PropTypes.object,
     setImage: PropTypes.func.isRequired,
-
+    hasImage: PropTypes.bool.isRequired,
     onStepChange: PropTypes.func.isRequired,
     onStepAdd: PropTypes.func.isRequired,
     onStepRemove: PropTypes.func.isRequired,

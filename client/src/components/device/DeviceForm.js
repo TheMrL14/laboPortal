@@ -5,6 +5,7 @@ import TextAreaInput from "../common/input/TextAreaInput";
 import {Dropdown} from "primereact/dropdown";
 import FileInput from "../common/input/FileInput";
 import {FetchByteArray} from "../common/Utils";
+import StepInput from "../common/input/StepInput";
 
 const DeviceForm = ({
                         device,
@@ -12,6 +13,9 @@ const DeviceForm = ({
                         sops,
                         onSave,
                         onChange,
+                        onLinksChange,
+                        handleAddLinkClick,
+                        handleRemoveLinkClick,
                         isNewSop,
                         setSelectedSop,
                         saving = false,
@@ -24,6 +28,11 @@ const DeviceForm = ({
             (fileByteArray) => (device.image = fileByteArray)
         );
     };
+
+    if (sop.id == 0) {
+        sop = null;
+    }
+
     return (
         <form onSubmit={onSave}>
             <h2>{device.id ? "Edit" : "Add"} Device</h2>
@@ -53,6 +62,17 @@ const DeviceForm = ({
                 setImage={setImage}
                 error={errors.description}
             />
+            <StepInput
+                name="externalLinks"
+                label="External Links"
+                errors={errors}
+                steps={device.externalLinks}
+                onStepChange={onLinksChange}
+                onStepAdd={handleAddLinkClick}
+                onStepRemove={handleRemoveLinkClick}
+                hasImage={false}
+                setImage={setImage}
+            />
             <Dropdown
                 optionLabel="title"
                 filter
@@ -63,6 +83,7 @@ const DeviceForm = ({
                 options={sops}
                 onChange={(e) => setSelectedSop(e.value)}
             />
+
 
             <br/>
             {isNewSop ? null : (

@@ -13,7 +13,7 @@ import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
 
 /*
- *css and html structuire from
+ *css and html structure from
  *https://codepen.io/faaezahmd/pen/dJeRex
  *
  */
@@ -43,7 +43,6 @@ function SopsPage({sops, loadSops, ...props}) {
 
     useEffect(() => {
         filter()
-
     }, [typeFilter])
 
     function filter() {

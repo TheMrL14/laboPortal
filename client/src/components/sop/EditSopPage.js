@@ -72,6 +72,7 @@ function EditSopPage({
     };
 
     const handleAbbreviationChange = (e, index) => {
+        console.log(e.target.name)
         const {value} = e.target;
         const list = [...sop.abbreviations];
         list[index][e.target.name] = value;
@@ -95,7 +96,7 @@ function EditSopPage({
             ...prevSop,
             ["abbreviations"]: [
                 ...prevSop.abbreviations,
-                {abbreviation: "", description: ""},
+                {abbreviationShort: "", description: ""},
             ],
         }));
     };
