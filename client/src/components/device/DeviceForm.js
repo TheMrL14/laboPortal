@@ -29,7 +29,7 @@ const DeviceForm = ({
         );
     };
 
-    if (sop.id == 0) {
+    if (sop == null || sop.id == 0) {
         sop = null;
     }
 
