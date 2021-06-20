@@ -30,7 +30,7 @@ export function getRequest(endpoint) {
 }
 
 export function authenticatedPostRequest(endpoint, object) {
-    return fetch(rootEndpoint + endpoint + (object.id || ""), {
+    return fetch(rootEndpoint + endpoint + ("/" + object.id || ""), {
         method: object.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
         headers: {
             "content-type": "application/json",

@@ -72,7 +72,7 @@ class Header extends Component {
                         <span className="mainLogo">
                             <img
                                 src={getLogoUrl()}
-                                alt="Logo"/>;
+                                alt="Logo"/>
                         </span>
                         {auth.isAuthenticated ? profileButton : loginButton}
                         <NavLink to="/devices" activeClassName="active">
