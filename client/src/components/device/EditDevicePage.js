@@ -203,6 +203,7 @@ EditDevicePage.propTypes = {
 
     sop: PropTypes.object,
     sops: PropTypes.array.isRequired,
+    sopsToSelect: PropTypes.array,
 
     loadSops: PropTypes.func.isRequired,
     saveSop: PropTypes.func.isRequired,

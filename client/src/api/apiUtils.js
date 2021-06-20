@@ -30,8 +30,9 @@ export function getRequest(endpoint) {
 }
 
 export function authenticatedPostRequest(endpoint, object) {
-    object.id = !object.id || object.id === 0 ? null : object.id;
+    object.id = !object.id || object.id === 0 || object.id === "" ? null : object.id;
     const id = object.id != null ? object.id : ""
+    console.log(object.id)
     return fetch(rootEndpoint + endpoint + ("/" + id), {
         method: object.id != null ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
         headers: {
@@ -60,7 +61,7 @@ export function authenticatedPostFileRequest(endpoint, file) {
 }
 
 export function authenticatedDeleteRequest(endpoint, id) {
-    return fetch(rootEndpoint + endpoint + id, {method: "DELETE"})
+    return fetch(rootEndpoint + endpoint + "/" + id, {method: "DELETE"})
         .then(handleResponse)
         .catch(handleError);
 }

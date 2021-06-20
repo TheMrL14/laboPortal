@@ -1,6 +1,6 @@
 import {authenticatedDeleteRequest, authenticatedPostRequest, getRequest,} from "./apiUtils";
 
-const endpoint = "/devices/";
+const endpoint = "/devices";
 
 export function getDevices() {
     return getRequest(endpoint);
